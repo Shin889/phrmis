@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="utf-8" />
+	<title>HRMIS | Login</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN core-css ================== -->
+	<link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/css/transparent/app.min.css' %}" rel="stylesheet" />
+	<!-- ================== END core-css ================== -->
+
+	<link rel="icon" type="image/png" href="{% static 'assets/img/logo/logo_poc.png' %}">
+</head>
+<body class='pace-top'>
+	<!-- BEGIN page-cover -->
+	<div class="app-cover"></div>
+	<!-- END page-cover -->
+	
+	<!-- BEGIN #loader -->
+	<div id="loader" class="app-loader">
+		<span class="spinner"></span>
+	</div>
+	<!-- END #loader -->
+
+	<!-- BEGIN #app -->
+	<div id="app" class="app">
+		<!-- BEGIN login -->
+		<div class="login login-with-news-feed">
+			<!-- BEGIN news-feed -->
+			<div class="news-feed">
+				<div class="news-image" style="background-image: url(../assets/img/login-bg/login-bg-11.jpg)"></div>
+				<div class="news-caption">
+					<h4 class="caption-title"><b>Human Resource Management Information</b> System</h4>
+					<p>
+						Download the HRMIS app for iPhone®, iPad®, and Android™.
+					</p>
+				</div>
+			</div>
+			<!-- END news-feed -->
+			
+			<!-- BEGIN login-container -->
+			<div class="login-container">
+				<!-- BEGIN login-header -->
+				<div class="login-header mb-30px">
+					<div class="brand">
+						<div class="d-flex align-items-center">
+							<span><img src="{% static 'assets/img/logo/logo_poc.png' %}" class="logo"></span>
+							<b>HRMI</b> System
+						</div>
+						<small>Membership Form</small>
+					</div>
+					<div class="icon">
+						<i class="fa fa-sign-in-alt"></i>
+					</div>
+				</div>
+				<!-- END login-header -->
+				
+				<!-- BEGIN login-content -->
+				<div class="login-content">
+					<form method="POST" class="fs-13px">
+					<!-- <form action="/doLogin" method="POST" class="fs-13px"> -->
+						{% csrf_token %}
+						<div class="form-floating mb-15px">
+							<input type="text" class="form-control h-45px fs-13px" placeholder="Email Address" id="emailAddress" name="emailid" />
+							<label for="emailAddress" class="d-flex align-items-center fs-13px text-gray-300">Email Address</label>
+						</div>
+						<div class="form-floating mb-15px">
+							<input type="password" class="form-control h-45px fs-13px" placeholder="Password" id="password" name="password" />
+							<label for="password" class="d-flex align-items-center fs-13px text-gray-300">Password</label>
+						</div>
+						<!-- <div class="form-check mb-30px">
+							<input class="form-check-input" type="checkbox" value="1" id="rememberMe" />
+							<label class="form-check-label" for="rememberMe">
+								Remember Me
+							</label>
+						</div> -->
+						<div class="mb-15px">
+							<button type="submit" class="btn btn-primary d-block h-45px w-100 btn-lg fs-14px">Sign me in</button>
+						</div>
+						<div class="mb-40px pb-40px text-white">
+							Not a member yet? Click <a href="register" class="text-primary">here</a> to register.
+						</div>
+						<hr class="bg-gray-600 opacity-2" />
+						<div class="text-gray-300 text-center text-white bg-opacity-50 mb-0">
+							&copy; Provincial Government of Catanduanes | GO - IT Department 2025
+						</div>
+					</form>
+				</div>
+				<!-- END login-content -->
+			</div>
+			<!-- END login-container -->
+		</div>
+		<!-- END login -->
+
+		<!-- BEGIN Error Message -->
+		{% if error == "no" %}
+		<script>
+			// alert('Login Succesful');
+			window.location = ("home");
+		</script>
+		{% endif %}
+		{% if error == "yes" %}
+		<script>
+			alert('Incorrect Email Address and Password. Please try again.');
+		</script>
+		{% endif %}
+		<!-- END Error Message -->
+		
+		<!-- BEGIN scroll-top-btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
+		<!-- END scroll-top-btn -->
+	</div>
+	<!-- END #app -->
+	
+	<!-- ================== BEGIN core-js ================== -->
+	<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+	<script src="{% static 'assets/js/app.min.js' %}"></script>
+	<!-- ================== END core-js ================== -->
+</body>
+</html>

@@ -1,0 +1,3 @@
+PostgreSQL
+PW: admin
+Port: 5432

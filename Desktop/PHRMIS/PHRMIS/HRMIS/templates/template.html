@@ -1,0 +1,225 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>{% block title %}{% endblock %}</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN core-css ================== -->
+	<link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/css/transparent/app.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' %}" rel="stylesheet" />
+	<!-- ================== END core-css ================== -->
+
+	<link href="{% static 'assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css' %}" rel="stylesheet" />
+	<!-- File Upload -->
+	<!-- <link href="{% static 'assets/plugins/blueimp-gallery/css/blueimp-gallery.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/plugins/blueimp-file-upload/css/jquery.fileupload.css' %}" rel="stylesheet" />
+	<link href="{% static 'assets/plugins/blueimp-file-upload/css/jquery.fileupload-ui.css' %}" rel="stylesheet" /> -->
+
+	<link rel="icon" type="image/png" href="{% static 'assets/img/logo/logo_poc.png' %}">
+</head>
+<body>
+	<!-- BEGIN page-cover -->
+	<div class="app-cover"></div>
+	<!-- END page-cover -->
+
+	<!-- BEGIN #loader -->
+	<div id="loader" class="app-loader">
+		<span class="spinner"></span>
+	</div>
+	<!-- END #loader -->
+	<!-- BEGIN #app -->
+	<div id="app" class="app app-header-fixed app-sidebar-fixed">
+		<!-- BEGIN #header -->
+		<div id="header" class="app-header">
+			<!-- BEGIN navbar-header -->
+			<div class="navbar-header">
+				<a href="" class="navbar-brand"><span class="navbar-logo"><img src="{% static 'assets/img/logo/logo_poc.png' %}" alt="" class="navbar-logo"></span> <b class="me-1">HRMI</b> System</a>
+				<button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- END navbar-header -->
+			<!-- BEGIN header-nav -->
+			<div class="navbar-nav">
+				<!-- <div class="navbar-item navbar-form">
+					<form action="" method="POST" name="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Enter keyword" />
+							<button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+						</div>
+					</form>
+				</div> -->
+				<!-- <div class="navbar-item dropdown">
+					<a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
+						<i class="fa fa-bell"></i>
+						<span class="badge">0</span>
+					</a>
+					<div class="dropdown-menu media-list dropdown-menu-end">
+						<div class="dropdown-header">NOTIFICATIONS (0)</div>
+						<div class="text-center w-300px py-3 text-inverse">
+							No notification found
+						</div>
+					</div>
+				</div> -->
+				<div class="navbar-item navbar-user dropdown">
+					<a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+						<div class="image image-icon bg-gray-800 text-gray-600">
+							<i class="fa fa-user"></i>
+							
+						</div>
+						<span>
+							<span class="d-none d-md-inline">{{request.user.first_name}} {{request.user.last_name}}</span>
+							<b class="caret"></b>
+						</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end me-1">
+						<!-- <a href="profile" class="dropdown-item">Profile</a>
+						<a href="javascript:;" class="dropdown-item d-flex align-items-center">
+							Inbox
+							<span class="badge bg-danger rounded-pill ms-auto pb-4px">2</span>
+						</a>
+						<a href="javascript:;" class="dropdown-item">Calendar</a>
+						<a href="javascript:;" class="dropdown-item">Setting</a>
+						<div class="dropdown-divider"></div> -->
+						<a href="logoutUser" class="dropdown-item">Logout</a>
+					</div>
+				</div>
+			</div>
+			<!-- END header-nav -->
+		</div>
+		<!-- END #header -->
+
+        {% block sidebar %}
+        {% endblock %}
+
+		{% block content %}
+		{% endblock %}
+
+		<!-- BEGIN scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
+		<!-- END scroll to top btn -->
+	</div>
+	<!-- END #app -->
+
+	<!-- ================== BEGIN core-js ================== -->
+	<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+	<script src="{% static 'assets/js/app.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}"></script>
+	<!-- ================== END core-js ================== -->
+	<!-- Tables -->
+	<script src="{% static 'assets/plugins/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/pdfmake/build/pdfmake.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/pdfmake/build/vfs_fonts.js' %}"></script>
+	<script src="{% static 'assets/plugins/jszip/dist/jszip.min.js' %}"></script>
+	<!-- Chart -->
+	<script src="{% static 'assets/plugins/chart.js/dist/Chart.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/apexcharts/dist/apexcharts.min.js' %}"></script>
+	<!-- Masked -->
+	<script src="{% static 'assets/plugins/jquery.maskedinput/src/jquery.maskedinput.js' %}"></script>
+	<!-- Validation -->
+	<script src="{% static 'assets/plugins/parsleyjs/dist/parsley.min.js' %}"></script>
+	<!-- File Upload -->
+	<!-- <script src="{% static 'assets/plugins/blueimp-file-upload/js/vendor/jquery.ui.widget.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-tmpl/js/tmpl.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-load-image/js/load-image.all.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-canvas-to-blob/js/canvas-to-blob.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-gallery/js/jquery.blueimp-gallery.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.iframe-transport.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-process.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-image.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-audio.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-video.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-validate.js' %}"></script>
+	<script src="{% static 'assets/plugins/blueimp-file-upload/js/jquery.fileupload-ui.js' %}"></script>
+	<script src="{% static 'assets/js/demo/form-multiple-upload.demo.js' %}"></script> -->
+
+	<!-- Date Picker -->
+	<script>
+		$("#datepicker-autoClose").datepicker({
+		  todayHighlight: true,
+		  autoclose: true
+		});
+	</script>
+
+	<!-- Tables -->
+	<script>
+		$('#data-table-buttons').DataTable({
+		responsive: true,
+		dom: '<"row"<"col-sm-5"B><"col-sm-7"fr>>t<"row"<"col-sm-5"i><"col-sm-7"p>>',
+		buttons: [
+			{ extend: 'copy', className: 'btn-sm' },
+			{ extend: 'csv', className: 'btn-sm' },
+			{ extend: 'excel', className: 'btn-sm' },
+			{ extend: 'pdf', className: 'btn-sm' },
+			{ extend: 'print', className: 'btn-sm' }
+		],
+		});
+	</script>
+
+	<!-- Mask -->
+	<script>
+		$("#phone").mask('+63 (999) 999-9999');
+		$("#enumber").mask('99-999');
+	</script>
+
+	<!-- Chart -->
+	<script>
+		var options = {
+			chart: { height: 325, type: 'radialBar' }, // height: 350
+			plotOptions: {
+				radialBar: {
+					offsetY: 100, // -10
+					startAngle: 90, // 0
+					endAngle: 10, // 270
+					hollow: { margin: 5, size: '30%', background: 'transparent', image: undefined, },
+					dataLabels: { name: { show: false, }, value: { show: false, } }
+				}
+			},
+			colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],
+			series: [{% for c in colleged %}{{c.the_count}},{% endfor %}],
+			labels: [{% for i in colleged %}'{{i.collegedepartment}}',{% endfor %}],
+			legend: {
+				show: true,
+				floating: true,
+				position: 'left',
+				offsetX: -20, // 140
+				offsetY: 0, // 15
+				labels: { useSeriesColors: true },
+				markers: { size: 0 },
+				formatter: function (seriesName, opts) {
+					return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+				},
+				itemMargin: { horizontal: 1 }
+			}
+		}
+
+		var chart = new ApexCharts(
+			document.querySelector('#apex-radial-bar-chart'),
+			options
+		);
+
+		chart.render();
+	</script>
+
+</body>
+</html>
