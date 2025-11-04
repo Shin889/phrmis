@@ -15,9 +15,13 @@
             <div class="menu-profile">
                 <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
                     <div class="menu-profile-cover with-shadow"></div>
-                    <div class="menu-profile-image menu-profile-image-icon bg-gray-900 text-gray-600">
-                        <i class="fa fa-user"></i>
-                        
+                    <div class="menu-profile-image bg-gray-900 text-gray-600" style="display:flex; justify-content:center; align-items:center; width:80px; height:80px; border-radius:50%; overflow:hidden;">
+                        {% if employee.profilepicture %}
+                            <img src="{{ employee.profilepicture.url }}" alt="Profile Picture" 
+                                style="width:100%; height:100%; object-fit:cover;">
+                        {% else %}
+                            <i class="fa fa-user" style="font-size:40px; color:#ccc;"></i>
+                        {% endif %}
                     </div>
                     <div class="menu-profile-info">
                         <div class="d-flex align-items-center">

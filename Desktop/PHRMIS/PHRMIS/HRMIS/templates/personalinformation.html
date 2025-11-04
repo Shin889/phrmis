@@ -16,9 +16,15 @@ HRMIS | Personal Information
                 <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile"
                     data-target="#appSidebarProfileMenu">
                     <div class="menu-profile-cover with-shadow"></div>
-                    <div class="menu-profile-image menu-profile-image-icon bg-gray-900 text-gray-600">
-                        <i class="fa fa-user"></i>
+                    <div class="menu-profile-image bg-gray-900 text-gray-600" style="display:flex; justify-content:center; align-items:center; width:80px; height:80px; border-radius:50%; overflow:hidden;">
+                        {% if employee.profilepicture %}
+                            <img src="{{ employee.profilepicture.url }}" alt="Profile Picture" 
+                                style="width:100%; height:100%; object-fit:cover;">
+                        {% else %}
+                            <i class="fa fa-user" style="font-size:40px; color:#ccc;"></i>
+                        {% endif %}
                     </div>
+
                     <div class="menu-profile-info">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
@@ -66,6 +72,64 @@ HRMIS | Personal Information
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="menu-text">Personal Information</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="familybackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="menu-text">Family Background</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="menu-text">Educational Background</div>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="menu-text">Civil Service Eligibility</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="menu-text">Work Experience</div>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="menu-text">Voluntary Work Or Involvement In Civic / Non-Government / People / Voluntary Oranizations</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="menu-text">Learning And Development (L&D) In Interventions / Training Programs Attended</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="educationalbackground" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="menu-text">Other Information</div>
                 </a>
             </div>
             <div class="menu-item">
@@ -254,13 +318,12 @@ HRMIS | Personal Information
                     <label class="form-label">Height</label>
                     <input type="number" class="form-control" id="ht" name="height" placeholder="Height"
                         value="{{employee.height}}" />
-                </div> 
-               <div class="mb-3">
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Weight</label>
                     <input type="number" class="form-control" id="wt" name="weight" placeholder="Weight"
                         value="{{employee.weight}}" />
                 </div>
-                
                 <div class="mb-3">
                     <label class="form-label">Blood Type</label>
                     <select class="form-select" name="bloodtype">
@@ -280,7 +343,6 @@ HRMIS | Personal Information
                     <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
                         value="{{employee.gsisno}}" />
                 </div>
-                
                 <div class="mb-3">
                     <label for="pi" class="form-label">PAGIBIG NO.</label>
                     <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
@@ -295,115 +357,101 @@ HRMIS | Personal Information
                     <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
                         value="{{employee.tinno}}" />
                 </div>
-  
-                <div class="row">
-                    <!-- Permanent Address -->
-                    <div class="col-md-6">
-                        <div class="card mb-4">
-                            <div class="card-header bg-dark text-white fw-bold">
-                                Permanent Address
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label class="form-label">House/Block No.</label>
-                                    <input class="form-control" type="number" id="phb" name="permhouseblockno"
-                                        placeholder="House/Block Number" value="{{employee.permhouseblockno}}" />
-                                </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Street No.</label>
-                                    <input class="form-control" type="text" id="psn" name="permstreetno"
-                                        placeholder="Street Number" value="{{employee.permstreetno}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Subdivision/Village</label>
-                                    <input class="form-control" type="text" id="psv" name="subdivisionvillage"
-                                        placeholder="Subdivision/Village" value="{{employee.permsubdivisionvillage}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Barangay</label>
-                                    <input class="form-control" type="text" id="pb" name="barangay"
-                                        placeholder="Barangay" value="{{employee.permbarangay}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">City/Municipality</label>
-                                    <input class="form-control" type="text" id="pcm" name="citymunicipality"
-                                        placeholder="City/Municipality" value="{{employee.permcitymunicipality}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Province</label>
-                                    <input class="form-control" type="text" id="ppr" name="province"
-                                        placeholder="Province" value="{{employee.permprovince}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Zip Code</label>
-                                    <input class="form-control" type="number" id="pzc" name="zipcode"
-                                        placeholder="Zip Code" value="{{employee.permzipcode}}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Temporary Address -->
-                    <div class="col-md-6">
-                        <div class="card mb-4">
-                            <div class="card-header bg-dark text-white fw-bold">
-                                Temporary Address
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label class="form-label">House/Block No.</label>
-                                    <input class="form-control" type="number" id="thb" name="temphouseblockno"
-                                        placeholder="House/Block Number" value="{{employee.temphouseblockno}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Street No.</label>
-                                    <input class="form-control" type="text" id="tsn" name="tempstreetno"
-                                        placeholder="Street Number" value="{{employee.tempstreetno}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Subdivision/Village</label>
-                                    <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage"
-                                        placeholder="Subdivision/Village" value="{{employee.tempsubdivisionvillage}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Barangay</label>
-                                    <input class="form-control" type="text" id="tb" name="tempbarangay"
-                                        placeholder="Barangay" value="{{employee.tempbarangay}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">City/Municipality</label>
-                                    <input class="form-control" type="text" id="tcm" name="tempcitymunicipality"
-                                        placeholder="City/Municipality" value="{{employee.tempcitymunicipality}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Province</label>
-                                    <input class="form-control" type="text" id="tp" name="province"
-                                        placeholder="Province" value="{{employee.tempprovince}}" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Zip Code</label>
-                                    <input class="form-control" type="number" id="tzc" name="zipcode"
-                                        placeholder="Zip Code" value="{{employee.tempzipcode}}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- permanent resident address -->     
+                <div class="mb-3">
+                    <label class="form-label">House/Block No.</label>
+                    <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
+                        value="{{employee.permhouseblockno}}" />
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Street No.</label>
+                    <input class="form-control" type="text" id="psn" name="permstreetno" placeholder="Street Number"
+                        value="{{employee.permstreetno}}" />
+                </div>
 
-               <div class="mb-3">
+                <div class="mb-3">
+                    <label class="form-label">Subdivision/Village</label>
+                    <input class="form-control" type="text" id="psv" name="permsubdivisionvillage" placeholder="Subdivision/Village"
+                        value="{{employee.permsubdivisionvillage}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Barangay</label>
+                    <input class="form-control" type="text" id="pb" name="permbarangay" placeholder="Barangay"
+                        value="{{employee.permbarangay}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">City/Municipality</label>
+                    <input class="form-control" type="text" id="pcm" name="permcitymunicipality" placeholder="City/Municipality"
+                        value="{{employee.permcitymunicipality}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Province</label>
+                    <input class="form-control" type="text" id="ppr" name="permprovince" placeholder="Province"
+                        value="{{employee.permprovince}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Zip Code</label>
+                    <input class="form-control" type="number" id="pzc" name="permzipcode" placeholder="Zip Code"
+                        value="{{employee.permzipcode}}" />
+                </div>
+
+                <!-- temporary add -->
+                
+                <div class="mb-3">
+                    <label class="form-label">House/Block No.</label>
+                    <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
+                        value="{{employee.temphouseblockno}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Street No.</label>
+                    <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
+                        value="{{employee.tempstreetno}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Subdivision/Village</label>
+                    <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
+                        value="{{employee.tempsubdivisionvillage}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Barangay</label>
+                    <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
+                        value="{{employee.tempbarangay}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">City/Municipality</label>
+                    <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
+                        value="{{employee.tempcitymunicipality}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Province</label>
+                    <input class="form-control" type="text" id="tp" name="tempprovince" placeholder="Province"
+                        value="{{employee.tempprovince}}" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Zip Code</label>
+                    <input class="form-control" type="number" id="tzc" name="tempzipcode" placeholder="Zip Code"
+                        value="{{employee.tempzipcode}}" />
+                </div>
+
+                <!-- <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input class="form-control" type="email" id="emad" name="emailaddress" placeholder="Email Address"
+                        value="{{employee.emailaddress}}" />
+                </div> -->
+
+                <div class="mb-3">
                     <label class="form-label">Telephone Number</label>
                     <input class="form-control" type="tel" id="tpn" name="telephonenumber"
                         placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephonenumber}}" />
@@ -414,27 +462,19 @@ HRMIS | Personal Information
                     <input class="form-control" type="tel" id="mbn" name="mobilephonenumber"
                         placeholder="Mobile Number (e.g., 09XX-XXX-XXXX)" value="{{employee.mobilephonenumber}}" />
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label">Profile Picture</label>
-                    <input class="form-control" type="file" id="pp" name="profilepicture" accept="image/*" 
-                        value="{{employee.profilepicture}}" />
-                </div> 
-
-
-
-
-
+                    <input class="form-control" type="file" id="pp" name="profilepicture" accept="image/*">
+                </div>
 
             </div>
         </div>
+
         <!-- END panel -->
 
-        <!-- <div class="text-center mt-4 mb-3">
-    <button type="submit" class="btn btn-primary px-5">
-        <i class="fa fa-save me-2"></i> Save Changes
-    </button>
-</div> -->
+    <div class="text-start mt-3">
+        <button type="submit" class="btn btn-dark px-4">Save</button>
+    </div>  
 
     </form>
 </div>

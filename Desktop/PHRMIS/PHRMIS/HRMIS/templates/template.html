@@ -73,10 +73,15 @@
 				</div> -->
 				<div class="navbar-item navbar-user dropdown">
 					<a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-						<div class="image image-icon bg-gray-800 text-gray-600">
-							<i class="fa fa-user"></i>
-							
-						</div>
+					<div class="menu-profile-cover with-shadow"></div>
+                    <div class="menu-profile-image text-gray-600" style="display:flex; justify-content:center; align-items:center; width:32px; height:32px; border-radius:50%; overflow:hidden;">
+                        {% if employee.profilepicture %}
+                            <img src="{{ employee.profilepicture.url }}" alt="Profile Picture" 
+                                style="width:100%; height:100%; object-fit:cover;">
+                        {% else %}
+                            <i class="fa fa-user" style="font-size:40px; color:#ccc;"></i>
+                        {% endif %}
+                    </div>
 						<span>
 							<span class="d-none d-md-inline">{{request.user.first_name}} {{request.user.last_name}}</span>
 							<b class="caret"></b>

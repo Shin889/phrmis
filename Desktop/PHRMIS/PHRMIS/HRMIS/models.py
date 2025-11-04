@@ -56,20 +56,19 @@ class PersonalInformation(models.Model):
 
     dateofbirth = models.DateField(null=True)
     citizenship = models.CharField(max_length=30)
-    sex = models.CharField(max_length=10, choices=Sex_Choices)
-    civilstatus = models.CharField(max_length=50, choices=Civil_Status_Choices)
     placeofbirth = models.CharField(max_length=50)
     height = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
-    bloodtype = models.CharField(max_length=5, choices=Blood_Type_Choices)
+    bloodtype = models.CharField(max_length=5, choices=Blood_Type_Choices) 
     gsisno = models.CharField(max_length=15)
     pagibigno = models.CharField(max_length=15)
+    philhealthno = models.CharField(max_length=15)    
     sssno = models.CharField(max_length=15)
     tinno = models.CharField(max_length=15)
 
 #   permanent residence address
     permhouseblockno = models.IntegerField(null=True, blank=True)
-    permstreetno = models.CharField(max_length=20)
+    permstreetno = models.CharField(max_length=100)
     permsubdivisionvillage = models.CharField(max_length=20)
     permbarangay = models.CharField(max_length=30)
     permcitymunicipality = models.CharField(max_length=30)
@@ -78,17 +77,19 @@ class PersonalInformation(models.Model):
 
 #   temporary residence address
     temphouseblockno = models.IntegerField(null=True, blank=True)
-    tempstreetno = models.CharField(max_length=20)
+    tempstreetno = models.CharField(max_length=100)
     tempsubdivisionvillage = models.CharField(max_length=20)
     tempbarangay = models.CharField(max_length=30)
     tempcitymunicipality = models.CharField(max_length=30)
     tempprovince = models.CharField(max_length=30)
     tempzipcode = models.IntegerField(null=True, blank=True)
 
+    # emailaddress = models.EmailField(max_length=50)
     telephonenumber = models.CharField(max_length=15)
     mobilenumber = models.CharField(max_length=11)
+    sex = models.CharField(max_length=50, choices=Sex_Choices)
+    civilstatus = models.CharField(max_length=50, choices=Civil_Status_Choices)
     profilepicture = models.ImageField(null=True, blank=True)
-    
     objects=models.Manager()
     def __str__(self):
         return self.user.username

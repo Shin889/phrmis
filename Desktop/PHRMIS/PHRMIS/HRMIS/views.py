@@ -37,14 +37,14 @@ def personalinformation(request):
     user=request.user
     employee=PersonalInformation.objects.get(user=user)
     if request.method=="POST":
-        # Pesonal Information
+        # Personal Information
         fn=request.POST['firstname']
         mn=request.POST['middlename']
         ln=request.POST['lastname']
         ne=request.POST['nameextension']
         en=request.POST['employeenumber']
         ea=request.POST['emailaddress']
-        password=request.POST['pwd']
+        # password=request.POST['pwd', None]
         sx=request.POST['sex']
         cs=request.POST['civilstatus']
         dob=request.POST['dateofbirth']
@@ -58,7 +58,6 @@ def personalinformation(request):
         sss=request.POST['sssno']
         tin=request.POST['tinno']
 
-        # Permanent Residence
         phb=request.POST['permhouseblockno']
         psn=request.POST['permstreetno']
         psv=request.POST['permsubdivisionvillage']
@@ -67,7 +66,6 @@ def personalinformation(request):
         ppr=request.POST['permprovince']
         pzc=request.POST['permzipcode']
 
-        # Temporary Residence
         thb=request.POST['temphouseblockno']
         tsn=request.POST['tempstreetno']
         tsv=request.POST['tempsubdivisionvillage'] 
@@ -76,10 +74,9 @@ def personalinformation(request):
         tp=request.POST['tempprovince']
         tzc=request.POST['tempzipcode']
 
-        
+        emad=request.POST['emailaddress']
         tpn=request.POST['telephonenumber']
         mbn=request.POST['mobilephonenumber']
-        pp=request.FILES.get('profilepicture')
 
         # Address Details
         # st=request.POST['street']
@@ -109,36 +106,33 @@ def personalinformation(request):
         # employee.user.password = password
         employee.sex = sx
         employee.civilstatus = cs
-        if dob:
-            employee.dateofbirth = dob
         employee.placeofbirth = pob
         employee.citizenship = cit
-        employee.height = ht
-        employee.weight = wt
+        employee.height = int(ht) if ht else None
+        employee.weight = int(wt) if wt else None
         employee.bloodtype = bt
         employee.gsisno = gsis
         employee.pagibigno = pi
         employee.sssno = sss
         employee.tinno = tin
-        employee.telephonenumber = tpn
         employee.mobilephonenumber = mbn
-        if pp:
-            employee.profilepicture = pp
-        employee.permhouseblockno = phb
+        employee.telephonenumber = tpn
+
+        employee.permhouseblockno = int(phb) if phb else None
         employee.permstreetno = psn
         employee.permsubdivisionvillage = psv
         employee.permbarangay = pb
         employee.permcitymunicipality = pcm
         employee.permprovince = ppr
-        employee.permzipcode = pzc
-        employee.temphouseblockno = thb
+        employee.permzipcode = int(pzc) if pzc else None
+
+        employee.temphouseblockno = int(thb) if thb else None
         employee.tempstreetno = tsn
         employee.tempsubdivisionvillage = tsv
-        employee.tempzipcode = tzc
-        employee.tempprovince = tp
-        employee.tempcitymunicipality = tcm
         employee.tempbarangay = tb
-        
+        employee.tempcitymunicipality = tcm
+        employee.tempprovince = tp
+        employee.tempzipcode = int(tzc) if tzc else None
 
         # Address Details
         # employee.streetaddress = st
@@ -158,15 +152,29 @@ def personalinformation(request):
         # if doa:
         #     employee.dateofappointment = doa
         # employee.membershipfee = mf
+
+        if dob:
+            employee.dateofbirth = dob
+
+        if 'profilepicture' in request.FILES:
+            employee.profilepicture = request.FILES['profilepicture']
+
         try:
-            employee.save()
             employee.user.save()
-            user=User.objects.create_user(first_name=fn,last_name=ln,username=ea,password=password)
-            PersonalInformation.objects.create(user=user,employeenumber=en,middlename=mn,nameextension=ne)
+            employee.save()
             error = "no"
-        except:
+        except Exception as e:
+            print(e)
             error = "yes"
+
     return render(request, "personalinformation.html", locals())
+    
+def familybackground(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+
+    employee = PersonalInformation.objects.get(user=request.user)
+    return render(request, "familybackground.html", {'employee': employee})
 
 def admin_dashboard(request):
     if not request.user.is_authenticated:
@@ -175,6 +183,13 @@ def admin_dashboard(request):
     colleged=PersonalInformation.objects.values('collegedepartment').order_by('collegedepartment').annotate(the_count=Count('collegedepartment'))
     #print(colleged)
     return render(request, "admin_dashboard.html", locals())
+
+def home(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+
+    employee = PersonalInformation.objects.get(user=request.user)
+    return render(request, "dashboard.html", {'employee': employee})
 
 def logoutUser(request):
     logout(request)
