@@ -254,12 +254,13 @@ HRMIS | Personal Information
                     <label class="form-label">Height</label>
                     <input type="number" class="form-control" id="ht" name="height" placeholder="Height"
                         value="{{employee.height}}" />
-                </div>
-                <div class="mb-3">
+                </div> 
+               <div class="mb-3">
                     <label class="form-label">Weight</label>
                     <input type="number" class="form-control" id="wt" name="weight" placeholder="Weight"
                         value="{{employee.weight}}" />
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">Blood Type</label>
                     <select class="form-select" name="bloodtype">
@@ -279,10 +280,10 @@ HRMIS | Personal Information
                     <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
                         value="{{employee.gsisno}}" />
                 </div>
+                
                 <div class="mb-3">
                     <label for="pi" class="form-label">PAGIBIG NO.</label>
-                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBI
-G                        No." value="{{employee.pagibigno}}" />
+                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
                 </div>
                 <div class="mb-3">
                     <label for="sss" class="form-label">SSS NO.</label>
@@ -294,101 +295,115 @@ G                        No." value="{{employee.pagibigno}}" />
                     <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
                         value="{{employee.tinno}}" />
                 </div>
+  
+                <div class="row">
+                    <!-- Permanent Address -->
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white fw-bold">
+                                Permanent Address
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">House/Block No.</label>
+                                    <input class="form-control" type="number" id="phb" name="permhouseblockno"
+                                        placeholder="House/Block Number" value="{{employee.permhouseblockno}}" />
+                                </div>
 
-            <!-- permanent resident address -->     
-                <div class="mb-3">
-                    <label class="form-label">House/Block No.</label>
-                    <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
-                        value="{{employee.permhouseblockno}}" />
+                                <div class="mb-3">
+                                    <label class="form-label">Street No.</label>
+                                    <input class="form-control" type="text" id="psn" name="permstreetno"
+                                        placeholder="Street Number" value="{{employee.permstreetno}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Subdivision/Village</label>
+                                    <input class="form-control" type="text" id="psv" name="subdivisionvillage"
+                                        placeholder="Subdivision/Village" value="{{employee.permsubdivisionvillage}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Barangay</label>
+                                    <input class="form-control" type="text" id="pb" name="barangay"
+                                        placeholder="Barangay" value="{{employee.permbarangay}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">City/Municipality</label>
+                                    <input class="form-control" type="text" id="pcm" name="citymunicipality"
+                                        placeholder="City/Municipality" value="{{employee.permcitymunicipality}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Province</label>
+                                    <input class="form-control" type="text" id="ppr" name="province"
+                                        placeholder="Province" value="{{employee.permprovince}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Zip Code</label>
+                                    <input class="form-control" type="number" id="pzc" name="zipcode"
+                                        placeholder="Zip Code" value="{{employee.permzipcode}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Temporary Address -->
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white fw-bold">
+                                Temporary Address
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">House/Block No.</label>
+                                    <input class="form-control" type="number" id="thb" name="temphouseblockno"
+                                        placeholder="House/Block Number" value="{{employee.temphouseblockno}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Street No.</label>
+                                    <input class="form-control" type="text" id="tsn" name="tempstreetno"
+                                        placeholder="Street Number" value="{{employee.tempstreetno}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Subdivision/Village</label>
+                                    <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage"
+                                        placeholder="Subdivision/Village" value="{{employee.tempsubdivisionvillage}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Barangay</label>
+                                    <input class="form-control" type="text" id="tb" name="tempbarangay"
+                                        placeholder="Barangay" value="{{employee.tempbarangay}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">City/Municipality</label>
+                                    <input class="form-control" type="text" id="tcm" name="tempcitymunicipality"
+                                        placeholder="City/Municipality" value="{{employee.tempcitymunicipality}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Province</label>
+                                    <input class="form-control" type="text" id="tp" name="province"
+                                        placeholder="Province" value="{{employee.tempprovince}}" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Zip Code</label>
+                                    <input class="form-control" type="number" id="tzc" name="zipcode"
+                                        placeholder="Zip Code" value="{{employee.tempzipcode}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Street No.</label>
-                    <input class="form-control" type="text" id="psn" name="streetno" placeholder="Street Number"
-                        value="{{employee.permstreetno}}" />
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Subdivision/Village</label>
-                    <input class="form-control" type="text" id="psv" name="subdivisionvillage" placeholder="Subdivision/Village"
-                        value="{{employee.permsubdivisionvillage}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Barangay</label>
-                    <input class="form-control" type="text" id="pb" name="barangay" placeholder="Barangay"
-                        value="{{employee.permbarangay}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">City/Municipality</label>
-                    <input class="form-control" type="text" id="pcm" name="citymunicipality" placeholder="City/Municipality"
-                        value="{{employee.permcitymunicipality}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Province</label>
-                    <input class="form-control" type="text" id="ppr" name="province" placeholder="Province"
-                        value="{{employee.permprovince}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Zip Code</label>
-                    <input class="form-control" type="number" id="pzc" name="zipcode" placeholder="Zip Code"
-                        value="{{employee.permzipcode}}" />
-                </div>
-
-                <!-- temporary add -->
-                
-                <div class="mb-3">
-                    <label class="form-label">House/Block No.</label>
-                    <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
-                        value="{{employee.temphouseblockno}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Street No.</label>
-                    <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
-                        value="{{employee.tempstreetno}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Subdivision/Village</label>
-                    <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
-                        value="{{employee.tempsubdivisionvillage}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Barangay</label>
-                    <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
-                        value="{{employee.tempbarangay}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">City/Municipality</label>
-                    <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
-                        value="{{employee.tempcitymunicipality}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Province</label>
-                    <input class="form-control" type="text" id="tp" name="province" placeholder="Province"
-                        value="{{employee.tempprovince}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Zip Code</label>
-                    <input class="form-control" type="number" id="tzc" name="zipcode" placeholder="Zip Code"
-                        value="{{employee.tempzipcode}}" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Email Address</label>
-                    <input class="form-control" type="email" id="emad" name="emailaddress" placeholder="Email Address"
-                        value="{{employee.emailaddress}}" />
-                </div>
-
-                <div class="mb-3">
+               <div class="mb-3">
                     <label class="form-label">Telephone Number</label>
                     <input class="form-control" type="tel" id="tpn" name="telephonenumber"
                         placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephonenumber}}" />
@@ -402,9 +417,9 @@ G                        No." value="{{employee.pagibigno}}" />
 
                 <div class="mb-3">
                     <label class="form-label">Profile Picture</label>
-                    <input class="form-control" type="image" id="pp" name="profilepicture" placeholder="Profile Picture"
+                    <input class="form-control" type="file" id="pp" name="profilepicture" accept="image/*" 
                         value="{{employee.profilepicture}}" />
-                </div>
+                </div> 
 
 
 
@@ -414,6 +429,12 @@ G                        No." value="{{employee.pagibigno}}" />
             </div>
         </div>
         <!-- END panel -->
+
+        <!-- <div class="text-center mt-4 mb-3">
+    <button type="submit" class="btn btn-primary px-5">
+        <i class="fa fa-save me-2"></i> Save Changes
+    </button>
+</div> -->
 
     </form>
 </div>

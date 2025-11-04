@@ -58,6 +58,7 @@ def personalinformation(request):
         sss=request.POST['sssno']
         tin=request.POST['tinno']
 
+        # Permanent Residence
         phb=request.POST['permhouseblockno']
         psn=request.POST['permstreetno']
         psv=request.POST['permsubdivisionvillage']
@@ -66,7 +67,8 @@ def personalinformation(request):
         ppr=request.POST['permprovince']
         pzc=request.POST['permzipcode']
 
-        thb=request.POST['temphousblockno']
+        # Temporary Residence
+        thb=request.POST['temphouseblockno']
         tsn=request.POST['tempstreetno']
         tsv=request.POST['tempsubdivisionvillage'] 
         tb=request.POST['tempbarangay']
@@ -74,10 +76,10 @@ def personalinformation(request):
         tp=request.POST['tempprovince']
         tzc=request.POST['tempzipcode']
 
-        emad=request.POST['emailaddress']
+        
         tpn=request.POST['telephonenumber']
         mbn=request.POST['mobilephonenumber']
-        pp=request.POST['profilepicture']
+        pp=request.FILES.get('profilepicture')
 
         # Address Details
         # st=request.POST['street']
@@ -118,11 +120,10 @@ def personalinformation(request):
         employee.pagibigno = pi
         employee.sssno = sss
         employee.tinno = tin
-        employee.profilepicture = pp
-        employee.mobilephonenumber = mbn
         employee.telephonenumber = tpn
-        employee.emailaddress = emad
-
+        employee.mobilephonenumber = mbn
+        if pp:
+            employee.profilepicture = pp
         employee.permhouseblockno = phb
         employee.permstreetno = psn
         employee.permsubdivisionvillage = psv
@@ -130,7 +131,6 @@ def personalinformation(request):
         employee.permcitymunicipality = pcm
         employee.permprovince = ppr
         employee.permzipcode = pzc
-
         employee.temphouseblockno = thb
         employee.tempstreetno = tsn
         employee.tempsubdivisionvillage = tsv
