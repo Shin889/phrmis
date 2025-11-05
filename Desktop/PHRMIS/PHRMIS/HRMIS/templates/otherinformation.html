@@ -1,0 +1,269 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block title %}
+HRMIS | Other Information
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+<!-- BEGIN #content -->
+<div id="content" class="app-content">
+    <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- BEGIN breadcrumb -->
+        <!-- <ol class="breadcrumb float-xl-end">
+            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
+            <li class="breadcrumb-item active">Data</li>
+        </ol> -->
+        <!-- END breadcrumb -->
+        <!-- BEGIN page-header -->
+        <h1 class="page-header">Other Information</h1>
+        <!-- END page-header -->
+
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Other Information Details</h4>
+                <div class="panel-heading-btn">
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a> -->
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a> -->
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                            class="fa fa-minus"></i></a>
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a> -->
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="mb-3">
+                    <label class="form-label">Skill and Hobbies</label>
+                    <input class="form-control" type="text" id="sh" name="skillhobbies" placeholder="Skill and Hobbies"
+                        value="{{employee.skillhobbies}}" />
+                </div>
+                 <div class="mb-3">
+                    <label class="form-label">Recognition</label>
+                    <input class="form-control" type="text" id="rec" name="recognition" placeholder="Recognition"
+                        value="{{employee.recognition}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Organizations</label>
+                    <input class="form-control" type="text" id="org" name="organizations" placeholder="Organizations"
+                        value="{{employee.organizations}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Related Affinity B3rddegree</label>
+                    <input type="checkbox" class="form-check-input" id="ra3" name="relatedaffinityb3rddegree" placeholder="Related Affinity B3rddegree"
+                        value="{{employee.relatedaffinityb3rddegree}}" {% if employee.relatedaffinityb3rddegree %}checked{% endif %} />
+                </div>
+                 <div class="mb-3">
+                    <label class="form-label">Related Affinity B4rddegree</label>
+                    <input type="checkbox" class="form-check-input" id="ra4" name="relatedaffinityb4thdegree" placeholder="Related Affinity B4rddegree"
+                        value="{{employee.relatedaffinityb4thdegree}}" {% if employee.relatedaffinityb4thdegree %}checked{% endif %} />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Administrative Offense</label>
+                    <input type="checkbox" class="form-check-input" id="ao" name="administrativeoffense" placeholder="Administrative Offense"
+                        value="{{employee.administrativeoffense}}" {% if employee.administrativeoffense %}checked{% endif %}/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Administrative Offense Details</label>
+                    <input type="checkbox" class="form-check-input" id="aod" name="administrativeoffensedetails" placeholder="Administrative Offense Details"
+                        value="{{employee.administrativeoffensedetails}}"  {% if employee.administrativeoffensedetails %}checked{% endif %}/>
+                </div>
+                  <div class="mb-3">
+                    <label class="form-label">Criminally Charged Before Court</label>
+                    <input type="checkbox" class="form-check-input" id="ccc" name="criminallychargedbeforecourt" placeholder="Criminally Charged Before Court"
+                        value="{{employee.criminallychargedbeforecourt}}" {% if employee.criminallychargedbeforecourt %}checked{% endif %}/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Criminally Charged Details</label>
+                    <input type="checkbox" class="form-check-input" id="ccd" name="criminallychargeddetails" placeholder="Criminally Charged Details"
+                        value="{{employee.criminallychargeddetails}}" {% if employee.criminallychargeddetails %}checked{% endif %}/>
+                </div>
+
+                
+                <div class="mb-3">
+                    <label class="form-label">Criminally Charged Date Field</label>
+                    <input type="date" class="form-control" id="cdf" name="criminallychargeddatefiled" placeholder="Criminally Charged Date Field"
+                        value="{{employee.criminallychargeddatefiled|date:'Y-m-d'}}" />
+                </div>
+
+                 <div class="mb-3">
+                    <label class="form-label">Criminally Charged Status Case</label>
+                    <input class="form-control" type="text" id="ccs" name="criminallychargedstatuscase" placeholder="Criminally Charged Status Case"
+                        value="{{employee.criminallychargedstatuscase}}" />
+                </div>
+
+                <!-- details, labels, placeholders here to revise -->
+                <!-- double check form fields -->
+                
+                <div class="mb-3">
+                    <label class="form-label">Crime or Violation</label>
+                    <input type="checkbox" class="form-check-input" id="cov" name="crimeorviolation"
+                        value="{{employee.crimeorviolation}}" {% if employee.crimeorviolation %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Crime Details</label>
+                    <input class="form-control" type="text" id="cd" name="crimedetails" placeholder="Crime Details"
+                        value="{{employee.crimedetails}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Separated From Service</label>
+                    <input type="checkbox" class="form-check-input" id="sfs" name="separatedfromservice"
+                        value="{{employee.separatedfromservice}}" {% if employee.separatedfromservice %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Separated From Service Details</label>
+                    <input class="form-control" type="text" id="separatedfromservicedetails" name="separatedfromservicedetails" placeholder="Separated from Service Details"
+                        value="{{employee.separatedfromservicedetails}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Local Election Year</label>
+                    <input type="checkbox" class="form-check-input" id="lel" name="localelectionlastyear"
+                        value="{{employee.localelectionlastyear}}" {% if employee.localelectionlastyear %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Local Election Details</label>
+                    <input class="form-control" text="text" id="led" name="localelectiondetails" placeholder="details"
+                        value="{{employee.localelectiondetails}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Resigned to Compaign in the Last 3 Months</label>
+                    <input type="checkbox" class="form-check-input" id="rc3" name="resignedtocampaignlast3months"
+                        value="{{employee.resignedtocampaignlast3months}}" {% if employee.resignedtocampaignlast3months %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Resigned to Campaign Details</label>
+                    <input class="form-control" type="text" id="rcd" name="resignedtocampaigndetails" placeholder="Resigned to Campaign Details"
+                        value="{{employee.resignedtocampaigndetails}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Acquired Immigrant Status</label>
+                    <input type="checkbox" class="form-check-input" id="ais" name="acquiredimmigrantstatus" 
+                        value="{{employee.acquiredimmigrantstatus}}" {% if employee.acquiredimmigrantstatus %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Immigrant Status Country</label>
+                    <input class="form-control" type="text" id="isc" name="immigrantstatuscountry" 
+                        value="{{employee.immigrantstatuscountry}}" {% if employee.immigrantstatuscountry %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Indigenous Group</label>
+                    <input type="checkbox" class="form-check-input" id="ig" name="indigenousgroup" placeholder="details"
+                        value="{{employee.variable}}" {% if employee.variable %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3"> <!-- revise -->
+                    <label class="form-label">Indigenous Group Details</label>
+                    <input class="form-control" type="text" id="ign" name="indigenousgroupidno" placeholder="details"
+                        value="{{employee.indigenousgroupidno}}"/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Person with Disability</label>
+                    <input type="checkbox" class="form-check-input" id="pwd" name="personwithdisability" 
+                        value="{{employee.personwithdisability}}" {% if employee.personwithdisability %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Person with Disability ID No.</label>
+                    <input class="form-control" type="text" id="pdn" name="personwithdisabilityidno" 
+                        value="{{employee.personwithdisabilityidno}}"/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Solo Parent</label>
+                    <input type="checkbox" class="form-check-input" id="sp" name="soloparent" 
+                        value="{{employee.soloparent}}" {% if employee.soloparent %}checked{% endif %}/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Solo Parent ID No.</label>
+                    <input class="form-control" type="text" id="spn" name="soloparentidno" 
+                        value="{{employee.soloparentidno}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 1 Name </label>
+                    <input class="form-control" type="text" id="r1n" name="ref1name" placeholder="Ref 1 Name "
+                        value="{{employee.ref1name}}"/>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 1 Address</label>
+                    <input class="form-control" type="text" id=" r1a" name="ref1address" placeholder="Ref 1 Address"
+                        value="{{employee.ref1address}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 2 Tel No</label>
+                    <input class="form-control" type="text" id="r2t" name="ref2telno" placeholder="Ref 2 Tel No"
+                        value="{{employee.ref2telno}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 2 Address</label>
+                    <input class="form-control" type="text" id="r2a" name="ref2address" placeholder="Ref 2 Address"
+                        value="{{employee.ref2address}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 2 Tel No</label>
+                    <input class="form-control" type="text" id="r2t" name="ref2telno" placeholder="details"
+                        value="{{employee.ref2telno}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 3 Name</label>
+                    <input class="form-control" type="text" id="r3n" name="ref3name" placeholder="Ref 3 Name"
+                        value="{{employee.ref3name}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 3 Address</label>
+                    <input class="form-control" type="text" id="r3a" name="ref3address" placeholder="Ref 3 Address"
+                        value="{{employee.ef3address}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Ref 3 Tel No</label>
+                    <input class="form-control" type="text" id="r3t" name="ref3telno placeholder="Ref 3telno"
+                        value="{{employee.ref3telno}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Gov ID Dscription</label>
+                    <input class="form-control" type="text" id="gid" name="goviddescription" placeholder="Gov ID Dscription"
+                        value="{{employee.goviddescription}}" />
+                </div> <div class="mb-3">
+                    <label class="form-label">Gov ID Number</label>
+                    <input class="form-control" type="text" id="gin" name="govidnumber" placeholder="Gov ID Number"
+                        value="{{employee.govidnumber}}" />
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label">Gov Id Date Place Issued</label>
+                    <input class="form-control" type="text" id="gdp" name="goviddateplaceissued" placeholder="Gov Id Date Place Issued"
+                        value="{{employee.goviddateplaceissued}}" />
+                </div> 
+            </div>
+        </div>
+
+        <!-- END panel -->
+
+    <div class="text-start mt-3">
+        <button type="submit" class="btn btn-dark px-4">Save</button>
+    </div>  
+
+    </form>
+</div>
+<!-- END #content -->
+<!-- <script type="text/javascript">
+    function getdates()
+    {
+        var date = new Date();
+        document.getElementById("dob").innerHTML = date;
+    }
+</script> -->
+<!-- BEGIN Error Message -->
+{% if error == "no" %}
+<script>
+    alert('Other Information Updated Successfully');
+    window.location = ("otherinformation");
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something went wrong, try again.');
+</script>
+{% endif %}
+<!-- END Error Message -->
+
+{% endblock %}

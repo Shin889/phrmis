@@ -13,5 +13,11 @@ urlpatterns = [
     path('logoutUser', views.logoutUser),
     path('personalinformation', views.personalinformation),
     path('familybackground', views.familybackground),
+    path('educationalbackground', views.educationalbackground),
+    path('civilserviceeligibility', views.civilserviceeligibility),
+    path('workexperience', views.workexperience),
+    path('voluntarywork', views.voluntarywork),
+    path('learninganddevelopment', views.learninganddevelopment, name='learningandevelopment'),
+    path('otherinformation', views.otherinformation),
     path('register', views.register),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

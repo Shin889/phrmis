@@ -94,70 +94,122 @@ class PersonalInformation(models.Model):
     def __str__(self):
         return self.user.username
     
-# class FamilyBackground(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     spousesurname = models.CharField(max_length=20)
-#     spousefirstname = models.CharField(max_length=20)
-#     spousemiddlename = models.CharField(max_length=20)
-#     occupation = models.CharField(max_length=20)
-#     employer = models.CharField(max_length=20)
-#     businessaddress = models.CharField(max_length=20)
-#     telephone = models.IntegerField()
-#     nameofchildren = models.CharField(max_length=20)
-#     dateofbirth = models.DateField(null=True)
-#     fathersurname = models.CharField(max_length=20)
-#     fatherfirstname = models.CharField(max_length=20) 
-#     fathermiddlename = models.CharField(max_length=20)
-#     fathersurname = models.CharField(max_length=20)
-#     mothermaidenname = models.CharField(max_length=20)
-#     mothersurname = models.CharField(max_length=20)
-#     motherfirstname = models.CharField(max_length=20)
-#     mothermiddlename = models.CharField(max_length=20)
+class FamilyBackground(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    spousesurname = models.CharField(max_length=50)
+    spousefirstname = models.CharField(max_length=50)
+    spousemiddlename = models.CharField(max_length=50)
+    occupation = models.CharField(max_length=50)
+    employer = models.CharField(max_length=50)
+    businessaddress = models.CharField(max_length=100)
+    telephone = models.IntegerField(null=True, blank=True)
+    nameofchildren = models.CharField(max_length=50)
+    dateofbirth = models.DateField(null=True)
+    fathersurname = models.CharField(max_length=50)
+    fatherfirstname = models.CharField(max_length=50) 
+    fathermiddlename = models.CharField(max_length=50)
+    mothersurname = models.CharField(max_length=50)
+    motherfirstname = models.CharField(max_length=50)
+    mothermiddlename = models.CharField(max_length=50)
 
+class EducationalBackground(models.Model):   
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    educationlevel = models.CharField(max_length=20, choices=Level_Choices)
+    schoolname = models.CharField(max_length=50)
+    basiceducationdegreecourse = models.CharField(max_length=50)
 
-# class EducationalBackground(models.Model):   
-#     user = models.ForeignKey(User, on_delete=models.CASCADE) 
-#     educationlevel = models.CharField(max_length=20, choices=Level_Choices)
-#     schoolname = models.CharField(max_length=50)
-#     basiceducationdegreecourse = models.CharField(max_length=50)
+class CivilServiceEligibility(models.Model):  
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  
+    eligibilityname = models.CharField(max_length=50)
+    rating = models.CharField(max_length=10)
+    dateofexamination = models.DateField(null=True, blank=True)
+    placeofexamination = models.CharField(max_length=50)
+    licensenumber = models.CharField(max_length=10)
+    licensevalidity = models.DateField(null=True, blank=True)
 
-# class CivilServiceEligibility(models.Model):  
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)  
-#     eligibilityname = models.CharField(max_length=50)
-#     rating = models.CharField(max_length=10)
-#     dateofexamination = models.DateField()
-#     placeofexamination = models.CharField(max_length=50)
-#     licensenumber = models.CharField(max_length=10)
-#     licensevalidity = models.DateField()
+class WorkExperience(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    positiontitle = models.CharField(max_length=30)
+    companyofficeagency = models.CharField(max_length=50)
+    monthlysalary = models.CharField(max_length=10)
+    salarygrade = models.CharField(max_length=10)
+    appointmentstatus = models.CharField(max_length=20)
+    governmentservice = models.BooleanField(default=False)
+    fromdate = models.DateField(null=True, blank=True)
+    todate = models.DateField(null=True, blank=True)
 
-# class WorkExperience(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     positiontitle = models.CharField(max_length=30)
-#     companyofficeagency = models.CharField(max_length=50)
-#     monthlysalary = models.CharField(max_length=10)
-#     salarygrade = models.CharField(max_length=10)
-#     appointmentstatus = models.CharField(max_length=20)
-#     governmentservice = models.BooleanField(default=False)
-#     fromdate = models.DateField()
-#     todate = models.DateField()
+class VoluntaryWork(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.CharField(max_length=100)  
+    datefrom = models.DateField(null=True, blank=True)                 
+    dateto = models.DateField(null=True, blank=True) 
+    numberofhours = models.IntegerField(null=True, blank=True)  
+    position = models.CharField(max_length=100) 
 
-# class VoluntaryWork(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     organization = models.CharField(max_length=100)  
-#     datefrom = models.DateField()                 
-#     dateto = models.DateField() 
-#     numberofhours = models.IntegerField()  
-#     position = models.CharField(max_length=100) 
+class LearningandDevelopment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    titleoflearning = models.CharField(max_length=100)  
+    datefrom = models.DateField(null=True, blank=True)                 
+    dateto = models.DateField(null=True, blank=True) 
+    numberofhours = models.IntegerField(null=True, blank=True)  
+    typeofid = models.CharField(max_length=100) 
+    conducted = models.CharField(max_length=100) 
 
-# class LearningandDevelopment(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     titleoflearning = models.CharField(max_length=100)  
-#     datefrom = models.DateField()                 
-#     dateto = models.DateField() 
-#     numberofhours = models.IntegerField()  
-#     typeofid = models.CharField(max_length=100) 
-#     conducted = models.CharField(max_length=100) 
+class OtherInformation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    skillshobbies = models.CharField(max_length=100, blank=True, null=True)
+    recognition = models.CharField(max_length=100, blank=True, null=True)
+    organizations = models.CharField(max_length=100, blank=True, null=True)
+
+    relatedaffinityb3rddegree = models.BooleanField(default=False)
+    relatedaffinityb4thdegree = models.BooleanField(default=False)
+    relatedaffinitydetails = models.CharField(max_length=50, blank=True, null=True)
     
+    administrativeoffense = models.BooleanField(default=False)
+    administrativeoffensedetails = models.TextField(blank=True, null=True)
+    criminallychargedbeforecourt = models.BooleanField(default=False)
+    criminallychargeddetails = models.TextField(blank=True, null=True)
+    criminallychargeddatefiled = models.DateField(blank=True, null=True)
+    criminallychargedstatuscase = models.CharField(max_length=50, blank=True, null=True)
+    
+    crimeorviolation = models.BooleanField(default=False)
+    crimedetails = models.TextField(blank=True, null=True)
+    
+    separatedfromservice = models.BooleanField(default=False)
+    separatedfromservicedetails = models.TextField(blank=True, null=True)
+    
+    localelectionlastyear = models.BooleanField(default=False)
+    localelectiondetails = models.TextField(blank=True, null=True)
+    resignedtocampaignlast3months = models.BooleanField(default=False)
+    resignedtocampaigndetails = models.TextField(blank=True, null=True)
+    
+    acquiredimmigrantstatus = models.BooleanField(default=False)
+    immigrantstatuscountry = models.CharField(max_length=100, blank=True, null=True)
+    
+    indigenousgroup = models.BooleanField(default=False)
+    indigenousgroupidno = models.CharField(max_length=50, blank=True, null=True)
+    personwithdisability = models.BooleanField(default=False)
+    personwithdisabilityidno = models.CharField(max_length=20, blank=True, null=True)
+    soloparent = models.BooleanField(default=False)
+    soloparentidno = models.CharField(max_length=50, blank=True, null=True)
+
+    ref1name = models.CharField(max_length=100, blank=True, null=True)
+    ref1address = models.CharField(max_length=100, blank=True, null=True)
+    ref1telno = models.CharField(max_length=50, blank=True, null=True)
+    
+    ref2name = models.CharField(max_length=100, blank=True, null=True)
+    ref2address = models.CharField(max_length=100, blank=True, null=True)
+    ref2telno = models.CharField(max_length=50, blank=True, null=True)
+    
+    ref3name = models.CharField(max_length=100, blank=True, null=True)
+    ref3address = models.CharField(max_length=100, blank=True, null=True)
+    ref3telno = models.CharField(max_length=50, blank=True, null=True)
+
+    goviddescription = models.CharField(max_length=50, blank=True, null=True)
+    govidnumber = models.CharField(max_length=20, blank=True, null=True)
+    goviddateplaceissued = models.CharField(max_length=50, blank=True, null=True)
+ 
+
 # class SpecialskillsHobbies(models.Model): 
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
 #     skillshobbies = models.CharField(max_length=100)
@@ -206,17 +258,17 @@ class PersonalInformation(models.Model):
     
 # class References(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     ref1name = models.CharField(max_length=100)
-#     ref1address = models.CharField(max_length=100)
-#     ref1telno = models.CharField(max_length=50)
+    # ref1name = models.CharField(max_length=100)
+    # ref1address = models.CharField(max_length=100)
+    # ref1telno = models.CharField(max_length=50)
     
-#     ref2name = models.CharField(max_length=100)
-#     ref2address = models.CharField(max_length=100)
-#     ref2telno = models.CharField(max_length=50)
+    # ref2name = models.CharField(max_length=100)
+    # ref2address = models.CharField(max_length=100)
+    # ref2telno = models.CharField(max_length=50)
     
-#     ref3name = models.CharField(max_length=100)
-#     ref3address = models.CharField(max_length=100)
-#     ref3telno = models.CharField(max_length=50)
+    # ref3name = models.CharField(max_length=100)
+    # ref3address = models.CharField(max_length=100)
+    # ref3telno = models.CharField(max_length=50)
 
 # class Government (models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)

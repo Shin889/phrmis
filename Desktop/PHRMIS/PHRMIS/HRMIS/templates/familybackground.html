@@ -1,0 +1,161 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block title %}
+HRMIS | Family Background
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+<!-- BEGIN #content -->
+<div id="content" class="app-content">
+    <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- BEGIN breadcrumb -->
+        <!-- <ol class="breadcrumb float-xl-end">
+            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
+            <li class="breadcrumb-item active">Data</li>
+        </ol> -->
+        <!-- END breadcrumb -->
+        <!-- BEGIN page-header -->
+        <h1 class="page-header">Family Background</h1>
+        <!-- END page-header -->
+
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Personal Details</h4>
+                <div class="panel-heading-btn">
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a> -->
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a> -->
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                            class="fa fa-minus"></i></a>
+                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a> -->
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="mb-3">
+                    <label class="form-label">Spouse Surname</label>
+                    <input class="form-control" type="text" id="ssn" name="spousesurname" placeholder="Spouse Surname"
+                        value="{{employee.spousesurname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Spouse First Name</label>
+                    <input class="form-control" type="text" id="sfn" name="spousefirstname" placeholder="Spouse First Name"
+                        value="{{employee.spousefirstname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Spouse Middle Name</label>
+                    <input class="form-control" type="text" id="smn" name="spousemiddlename" placeholder="Spouse Middle Name"
+                        value="{{employee.spousemiddlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Occupation</label>
+                    <input class="form-control" type="text" id="occ" name="occupation" placeholder="Occupation"
+                        value="{{employee.occupation}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Employer</label>
+                    <input class="form-control" type="text" id="emp" name="employer" placeholder="Employer"
+                        value="{{employee.employer}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Business Address</label>
+                    <input class="form-control" type="text" id="ba" name="businessaddress" placeholder="Business Address"
+                        value="{{employee.businessaddress}}" />
+                        <!-- value="{{employee.dateofbirth|date:'Y-m-d'}} -->
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telephone</label>
+                    <input class="form-control" type="tel" id="tp" name="telephone"
+                        placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephone}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Name Of Children</label>
+                    <input type="text" class="form-control" id="nc" name="nameofchildren" placeholder="Name of Children"
+                        value="{{employee.nameofchildren}}" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="dateofbirth" placeholder="Date of Birth"
+                        value="{{employee.dateofbirth|date:'Y-m-d'}}" />
+                        <!-- value="{{employee.dateofbirth|date:'Y-m-d'}} -->
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Father Surname</label>
+                    <input class="form-control" type="text" id="fsn" name="fathersurname" placeholder="Father Surname"
+                        value="{{employee.fathersurname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Father First Name</label>
+                    <input class="form-control" type="text" id="ffn" name="fatherfirstname" placeholder="Father First Name"
+                        value="{{employee.fatherfirstname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Father Middle Name</label>
+                    <input class="form-control" type="text" id="fmn" name="fathermiddlename" placeholder="Father Middle Name"
+                        value="{{employee.fathermiddlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mother Surname</label>
+                    <input class="form-control" type="text" id="msn" name="mothersurname" placeholder="Mother Surname"
+                        value="{{employee.mothersurname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mother First Name</label>
+                    <input class="form-control" type="text" id="mfn" name="motherfirstname" placeholder="Mother First Name"
+                        value="{{employee.motherfirstname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mother Middle Name</label>
+                    <input class="form-control" type="text" id="mmn" name="mothermiddlename" placeholder="Mother Middle Name"
+                        value="{{employee.mothermiddlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- END panel -->
+
+    <div class="text-start mt-3">
+        <button type="submit" class="btn btn-dark px-4">Save</button>
+    </div>  
+
+    </form>
+</div>
+<!-- END #content -->
+<!-- <script type="text/javascript">
+    function getdates()
+    {
+        var date = new Date();
+        document.getElementById("dob").innerHTML = date;
+    }
+</script> -->
+<!-- BEGIN Error Message -->
+{% if error == "no" %}
+<script>
+    alert('Family Background Updated Successfully');
+    window.location = ("familybackground");
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something went wrong, try again.');
+</script>
+{% endif %}
+<!-- END Error Message -->
+
+{% endblock %}

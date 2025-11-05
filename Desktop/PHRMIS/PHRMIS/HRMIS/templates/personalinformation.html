@@ -6,205 +6,6 @@ HRMIS | Personal Information
 {% endblock %}
 
 {% block sidebar %}
-<!-- BEGIN #sidebar -->
-<div id="sidebar" class="app-sidebar">
-    <!-- BEGIN scrollbar -->
-    <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
-        <!-- BEGIN menu -->
-        <div class="menu">
-            <div class="menu-profile">
-                <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile"
-                    data-target="#appSidebarProfileMenu">
-                    <div class="menu-profile-cover with-shadow"></div>
-                    <div class="menu-profile-image bg-gray-900 text-gray-600" style="display:flex; justify-content:center; align-items:center; width:80px; height:80px; border-radius:50%; overflow:hidden;">
-                        {% if employee.profilepicture %}
-                            <img src="{{ employee.profilepicture.url }}" alt="Profile Picture" 
-                                style="width:100%; height:100%; object-fit:cover;">
-                        {% else %}
-                            <i class="fa fa-user" style="font-size:40px; color:#ccc;"></i>
-                        {% endif %}
-                    </div>
-
-                    <div class="menu-profile-info">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                {{request.user.first_name}} {{request.user.last_name}}
-                            </div>
-                            <!-- <div class="menu-caret ms-auto"></div> -->
-                        </div>
-                        <!-- <small>{{employee.academicrank}}</small> -->
-                    </div>
-                </a>
-            </div>
-            <!-- <div id="appSidebarProfileMenu" class="collapse">
-                <div class="menu-item pt-5px">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-cog"></i></div>
-                        <div class="menu-text">Settings</div>
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
-                        <div class="menu-text"> Send Feedback</div>
-                    </a>
-                </div>
-                <div class="menu-item pb-5px">
-                    <a href="javascript:;" class="menu-link">
-                        <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
-                        <div class="menu-text"> Helps</div>
-                    </a>
-                </div>
-                <div class="menu-divider m-0"></div>
-            </div> -->
-            <div class="menu-header">Navigation</div>
-            <div class="menu-item">
-                <a href="home" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-home fa-fw"></i>
-                    </div>
-                    <div class="menu-text">Home</div>
-                </a>
-            </div>
-            <div class="menu-item active">
-                <a href="personalinformation" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="menu-text">Personal Information</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="familybackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-user-friends"></i>
-                    </div>
-                    <div class="menu-text">Family Background</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <div class="menu-text">Educational Background</div>
-                </a>
-            </div>
-
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <div class="menu-text">Civil Service Eligibility</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="menu-text">Work Experience</div>
-                </a>
-            </div>
-
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-hand-holding-heart"></i>
-                    </div>
-                    <div class="menu-text">Voluntary Work Or Involvement In Civic / Non-Government / People / Voluntary Oranizations</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="menu-text">Learning And Development (L&D) In Interventions / Training Programs Attended</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="educationalbackground" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="menu-text">Other Information</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="changepassword" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                    <div class="menu-text">Change Password</div>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="logoutUser" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-sign-out"></i>
-                    </div>
-                    <div class="menu-text">Logout</div>
-                </a>
-            </div>
-            <!-- <div class="menu-item">
-                <a href="index.html" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
-                    </div>
-                    <div class="menu-text">Education</div>
-                </a>
-            </div>    
-            <div class="menu-item has-sub">
-                <a href="javascript:;" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-align-left"></i>
-                    </div>
-                    <div class="menu-text">Menu Level</div>
-                    <div class="menu-caret"></div>
-                </a>
-                <div class="menu-submenu">
-                    <div class="menu-item has-sub">
-                        <a href="javascript:;" class="menu-link">
-                            <div class="menu-text">Menu 1.1</div>
-                            <div class="menu-caret"></div>
-                        </a>
-                        <div class="menu-submenu">
-                            <div class="menu-item has-sub">
-                                <a href="javascript:;" class="menu-link">
-                                    <div class="menu-text">Menu 2.1</div>
-                                    <div class="menu-caret"></div>
-                                </a>
-                                <div class="menu-submenu">
-                                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 3.1</div></a></div>
-                                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 3.2</div></a></div>
-                                </div>
-                            </div>
-                            <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 2.2</div></a></div>
-                            <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 2.3</div></a></div>
-                        </div>
-                    </div>
-                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 1.2</div></a></div>
-                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 1.3</div></a></div>
-                </div>
-            </div> -->
-
-            <!-- BEGIN minify-button -->
-            <div class="menu-item d-flex">
-                <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i
-                        class="fa fa-angle-double-left"></i></a>
-            </div>
-            <!-- END minify-button -->
-
-        </div>
-        <!-- END menu -->
-    </div>
-    <!-- END scrollbar -->
-</div>
-<div class="app-sidebar-bg"></div>
-<div class="app-sidebar-mobile-backdrop"><a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a></div>
-<!-- END #sidebar -->
 {% endblock %}
 
 {% block content %}
@@ -236,30 +37,42 @@ HRMIS | Personal Information
                 </div>
             </div>
             <div class="panel-body">
-                <div class="mb-3">
-                    <label class="form-label">First Name</label>
-                    <input class="form-control" type="text" name="firstname" placeholder="First Name"
-                        value="{{employee.user.first_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                        oninvalid="setCustomValidity('Must contain characters only.')" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input class="form-control" type="text" name="firstname" placeholder="First Name"
+                                value="{{employee.user.first_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="form-label">Middle Name</label>
+                            <input class="form-control" type="text" name="middlename" placeholder="Middle Name"
+                                value="{{employee.middlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control" type="text" name="lastname" placeholder="Last Name"
+                                value="{{employee.user.last_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="form-label">Name Extension</label>
+                            <input class="form-control" type="text" name="nameextension" placeholder="Name Extension"
+                                value="{{employee.nameextension}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Middle Name</label>
-                    <input class="form-control" type="text" name="middlename" placeholder="Middle Name"
-                        value="{{employee.middlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                        oninvalid="setCustomValidity('Must contain characters only.')" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Last Name</label>
-                    <input class="form-control" type="text" name="lastname" placeholder="Last Name"
-                        value="{{employee.user.last_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                        oninvalid="setCustomValidity('Must contain characters only.')" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Name Extension</label>
-                    <input class="form-control" type="text" name="nameextension" placeholder="Name Extension"
-                        value="{{employee.nameextension}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                        oninvalid="setCustomValidity('Must contain characters only.')" />
-                </div>
+   
+               
                 <div class="mb-3">
                     <label class="form-label">Employee Number</label>
                     <input class="form-control" type="text" name="employeenumber" placeholder="00-000"
@@ -338,118 +151,132 @@ HRMIS | Personal Information
                         <option value="O-" {% if employee.bloodtype == "O-" %} selected {% endif %}>O-</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="gsis" class="form-label">GSIS NO.</label>
-                    <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
-                        value="{{employee.gsisno}}" />
-                </div>
-                <div class="mb-3">
-                    <label for="pi" class="form-label">PAGIBIG NO.</label>
-                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
-                </div>
-                <div class="mb-3">
-                    <label for="sss" class="form-label">SSS NO.</label>
-                    <input type="text" class="form-control" id="sss" name="sssno" placeholder="SSS No."
-                        value="{{employee.sssno}}" />
-                </div>
-                <div class="mb-3">
-                    <label for="tin" class="form-label">TIN NO.</label>
-                    <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
-                        value="{{employee.tinno}}" />
-                </div>
 
-            <!-- permanent resident address -->     
-                <div class="mb-3">
-                    <label class="form-label">House/Block No.</label>
-                    <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
-                        value="{{employee.permhouseblockno}}" />
-                </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="gsis" class="form-label">GSIS NO.</label>
+                                <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
+                                    value="{{employee.gsisno}}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="pi" class="form-label">PAGIBIG NO.</label>
+                                <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="sss" class="form-label">SSS NO.</label>
+                                <input type="text" class="form-control" id="sss" name="sssno" placeholder="SSS No."
+                                    value="{{employee.sssno}}" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="tin" class="form-label">TIN NO.</label>
+                                <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
+                                    value="{{employee.tinno}}" />
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Street No.</label>
-                    <input class="form-control" type="text" id="psn" name="permstreetno" placeholder="Street Number"
-                        value="{{employee.permstreetno}}" />
-                </div>
+            <!-- permanent resident address -->  
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Permanent Address</h5>
+                
+                        <div class="mb-3">
+                            <label class="form-label">House/Block No.</label>
+                            <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
+                                value="{{employee.permhouseblockno}}" />
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Subdivision/Village</label>
-                    <input class="form-control" type="text" id="psv" name="permsubdivisionvillage" placeholder="Subdivision/Village"
-                        value="{{employee.permsubdivisionvillage}}" />
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Street No.</label>
+                            <input class="form-control" type="text" id="psn" name="permstreetno" placeholder="Street Number"
+                                value="{{employee.permstreetno}}" />
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Barangay</label>
-                    <input class="form-control" type="text" id="pb" name="permbarangay" placeholder="Barangay"
-                        value="{{employee.permbarangay}}" />
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subdivision/Village</label>
+                            <input class="form-control" type="text" id="psv" name="permsubdivisionvillage" placeholder="Subdivision/Village"
+                                value="{{employee.permsubdivisionvillage}}" />
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">City/Municipality</label>
-                    <input class="form-control" type="text" id="pcm" name="permcitymunicipality" placeholder="City/Municipality"
-                        value="{{employee.permcitymunicipality}}" />
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Barangay</label>
+                            <input class="form-control" type="text" id="pb" name="permbarangay" placeholder="Barangay"
+                                value="{{employee.permbarangay}}" />
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Province</label>
-                    <input class="form-control" type="text" id="ppr" name="permprovince" placeholder="Province"
-                        value="{{employee.permprovince}}" />
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">City/Municipality</label>
+                            <input class="form-control" type="text" id="pcm" name="permcitymunicipality" placeholder="City/Municipality"
+                                value="{{employee.permcitymunicipality}}" />
+                        </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Zip Code</label>
-                    <input class="form-control" type="number" id="pzc" name="permzipcode" placeholder="Zip Code"
-                        value="{{employee.permzipcode}}" />
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Province</label>
+                            <input class="form-control" type="text" id="ppr" name="permprovince" placeholder="Province"
+                                value="{{employee.permprovince}}" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Zip Code</label>
+                            <input class="form-control" type="number" id="pzc" name="permzipcode" placeholder="Zip Code"
+                                value="{{employee.permzipcode}}" />
+                        </div>
+                    </div>
 
                 <!-- temporary add -->
-                
-                <div class="mb-3">
-                    <label class="form-label">House/Block No.</label>
-                    <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
-                        value="{{employee.temphouseblockno}}" />
-                </div>
+                <div class="col-md-6">
+                    <h5>Temporary Address</h5>
 
-                <div class="mb-3">
-                    <label class="form-label">Street No.</label>
-                    <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
-                        value="{{employee.tempstreetno}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">House/Block No.</label>
+                        <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
+                            value="{{employee.temphouseblockno}}" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Subdivision/Village</label>
-                    <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
-                        value="{{employee.tempsubdivisionvillage}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Street No.</label>
+                        <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
+                            value="{{employee.tempstreetno}}" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Barangay</label>
-                    <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
-                        value="{{employee.tempbarangay}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Subdivision/Village</label>
+                        <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
+                            value="{{employee.tempsubdivisionvillage}}" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">City/Municipality</label>
-                    <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
-                        value="{{employee.tempcitymunicipality}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Barangay</label>
+                        <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
+                            value="{{employee.tempbarangay}}" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Province</label>
-                    <input class="form-control" type="text" id="tp" name="tempprovince" placeholder="Province"
-                        value="{{employee.tempprovince}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">City/Municipality</label>
+                        <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
+                            value="{{employee.tempcitymunicipality}}" />
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Zip Code</label>
-                    <input class="form-control" type="number" id="tzc" name="tempzipcode" placeholder="Zip Code"
-                        value="{{employee.tempzipcode}}" />
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label">Province</label>
+                        <input class="form-control" type="text" id="tp" name="tempprovince" placeholder="Province"
+                            value="{{employee.tempprovince}}" />
+                    </div>
 
-                <!-- <div class="mb-3">
-                    <label class="form-label">Email Address</label>
-                    <input class="form-control" type="email" id="emad" name="emailaddress" placeholder="Email Address"
-                        value="{{employee.emailaddress}}" />
-                </div> -->
+                    <div class="mb-3">
+                        <label class="form-label">Zip Code</label>
+                        <input class="form-control" type="number" id="tzc" name="tempzipcode" placeholder="Zip Code"
+                            value="{{employee.tempzipcode}}" />
+                    </div>
+                </div>
+            </div>
 
                 <div class="mb-3">
                     <label class="form-label">Telephone Number</label>

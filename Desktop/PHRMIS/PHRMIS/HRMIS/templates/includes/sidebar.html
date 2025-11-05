@@ -1,0 +1,55 @@
+{% load static %}
+
+<!-- BEGIN #sidebar -->
+<div id="sidebar" class="app-sidebar">
+    <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+        <div class="menu">
+            <div class="menu-profile">
+                <a href="javascript:;" class="menu-profile-link">
+                    <div class="menu-profile-cover with-shadow"></div>
+                    <div class="menu-profile-image bg-gray-900 text-gray-600"
+                        style="display:flex; justify-content:center; align-items:center; width:80px; height:80px; border-radius:50%; overflow:hidden;">
+                        {% if employee.profilepicture %}
+                            <img src="{{ employee.profilepicture.url }}" alt="Profile Picture"
+                                 style="width:100%; height:100%; object-fit:cover;">
+                        {% else %}
+                            <i class="fa fa-user" style="font-size:40px; color:#ccc;"></i>
+                        {% endif %}
+                    </div>
+                    <div class="menu-profile-info">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                {{ request.user.first_name }} {{ request.user.last_name }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="menu-header">Navigation</div>
+
+            <div class="menu-item"><a href="home" class="menu-link"><div class="menu-icon"><i class="fas fa-home fa-fw"></i></div><div class="menu-text">Home</div></a></div>
+            <div class="menu-item"><a href="personalinformation" class="menu-link"><div class="menu-icon"><i class="fa fa-user"></i></div><div class="menu-text">Personal Information</div></a></div>
+            <div class="menu-item"><a href="familybackground" class="menu-link"><div class="menu-icon"><i class="fas fa-user-friends"></i></div><div class="menu-text">Family Background</div></a></div>
+            <div class="menu-item"><a href="educationalbackground" class="menu-link"><div class="menu-icon"><i class="fas fa-school"></i></div><div class="menu-text">Educational Background</div></a></div>
+            <div class="menu-item"><a href="civilserviceeligibility" class="menu-link"><div class="menu-icon"><i class="fas fa-id-card"></i></div><div class="menu-text">Civil Service Eligibility</div></a></div>
+            <div class="menu-item"><a href="workexperience" class="menu-link"><div class="menu-icon"><i class="fas fa-briefcase"></i></div><div class="menu-text">Work Experience</div></a></div>
+            <div class="menu-item"><a href="voluntarywork" class="menu-link"><div class="menu-icon"><i class="fas fa-hand-holding-heart"></i></div><div class="menu-text">Voluntary Work</div></a></div>
+            <div class="menu-item"><a href="{% url 'learningandevelopment' %}" class="menu-link"><div class="menu-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="menu-text">Learning And Development</div></a></div>
+            <div class="menu-item"><a href="otherinformation" class="menu-link"><div class="menu-icon"><i class="fas fa-info-circle"></i></div><div class="menu-text">Other Information</div></a></div>
+            <div class="menu-item"><a href="changepassword" class="menu-link"><div class="menu-icon"><i class="fa fa-lock"></i></div><div class="menu-text">Change Password</div></a></div>
+            <div class="menu-item"><a href="logoutUser" class="menu-link"><div class="menu-icon"><i class="fa fa-sign-out"></i></div><div class="menu-text">Logout</div></a></div>
+
+            <div class="menu-item d-flex">
+                <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify">
+                    <i class="fa fa-angle-double-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-sidebar-bg"></div>
+<div class="app-sidebar-mobile-backdrop">
+    <a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a>
+</div>
+<!-- END #sidebar -->

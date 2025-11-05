@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import models
 from django.db.models import Count
 from django.shortcuts import redirect, render
+from datetime import datetime
 
 # Create your views here.
 
@@ -168,14 +169,402 @@ def personalinformation(request):
             error = "yes"
 
     return render(request, "personalinformation.html", locals())
-    
+
 def familybackground(request):
     if not request.user.is_authenticated:
         return redirect("/eLogin")
+    error=""
+    user=request.user
 
-    employee = PersonalInformation.objects.get(user=request.user)
-    return render(request, "familybackground.html", {'employee': employee})
+    employee, created = FamilyBackground.objects.get_or_create(user=user)    
+    
+    if request.method=="POST":
+        try:
+            ssn=request.POST['spousesurname']
+            sfn=request.POST['spousefirstname']
+            smn=request.POST['spousemiddlename']
+            occ=request.POST['occupation']
+            emp=request.POST['employer']
+            ba=request.POST['businessaddress']
+            tp=request.POST['telephone']
+            nc=request.POST['nameofchildren']
+            dob=request.POST['dateofbirth']
+            fsn=request.POST['fathersurname']
+            ffn=request.POST['fatherfirstname']
+            fmn=request.POST['fathermiddlename']
+            msn=request.POST['mothersurname']
+            mfn=request.POST['motherfirstname']
+            mmn=request.POST['mothermiddlename']
 
+            employee.spousesurname = ssn
+            employee.spousefirstname = sfn
+            employee.spousemiddlename = smn
+            employee.occupation = occ
+            employee.employer = emp
+            employee.businessaddress = ba
+            employee.telephone = int(tp) if tp and tp.isdigit() else None
+            employee.nameofchildren = nc
+            employee.fathersurname = fsn
+            employee.fatherfirstname = ffn
+            employee.fathermiddlename = fmn
+            employee.mothersurname = msn
+            employee.motherfirstname = mfn
+            employee.mothermiddlename = mmn
+
+            if dob:
+                try:
+                    employee.dateofbirth = datetime.strptime(dob, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.dateofbirth = None  
+            else:
+                employee.dateofbirth = None
+
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Family Background:", e)
+            error = "yes"
+
+    return render(request, "familybackground.html", locals())
+
+def educationalbackground(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = EducationalBackground.objects.get_or_create(user=user)     
+    
+    if request.method=="POST":
+        try:
+            el=request.POST['educationlevel']
+            sn=request.POST['schoolname']
+            bedc=request.POST['basiceducationdegreecourse']   
+
+            employee.educationlevel = el
+            employee.schoolname = sn
+            employee.basiceducationdegreecourse = bedc
+        
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Educational Background:", e)
+            error = "yes"
+
+    return render(request, "educationalbackground.html", locals())
+
+def civilserviceeligibility(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = CivilServiceEligibility.objects.get_or_create(user=user) 
+
+    if request.method=="POST":
+        try:
+            en = request.POST.get('eligibilityname', '').strip()
+            rtn = request.POST.get('rating', '').strip()
+            doe = request.POST.get('dateofexamination', '').strip()
+            poe = request.POST.get('placeofexamination', '').strip()
+            ln = request.POST.get('licensenumber', '').strip()
+            lv = request.POST.get('licensevalidity', '').strip()
+
+            employee.eligibilityname = en
+            employee.rating = rtn
+            employee.placeofexamination = poe
+            employee.licensenumber = ln
+
+            if doe:
+                try:
+                    employee.dateofexamination = datetime.strptime(doe, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.dateofexamination = None
+            else:
+                employee.dateofexamination = None
+
+            if lv:
+                try:
+                    employee.licensevalidity = datetime.strptime(lv, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.licensevalidity = None
+            else:
+                employee.licensevalidity = None
+
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Civil Service Eligibility:", e)
+            error = "yes"
+
+    return render(request, "civilserviceeligibility.html", locals())
+
+def workexperience(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = WorkExperience.objects.get_or_create(user=user)     
+    
+    if request.method=="POST":
+        try:
+            pt=request.POST['positiontitle']
+            coa=request.POST['companyofficeagency']
+            ms=request.POST['monthlysalary']
+            sg=request.POST['salarygrade']
+            aps=request.POST['appointmentstatus']
+            gs=request.POST.get('governmentservice')
+            fd=request.POST['fromdate'] 
+            td=request.POST['todate']  
+
+            employee.positiontitle = pt
+            employee.companyofficeagency = coa
+            employee.monthlysalary = ms
+            employee.salarygrade = sg
+            employee.appointmentstatus = aps
+            employee.governmentservice = True if gs else False
+
+            if fd:
+                try:
+                    employee.fromdate = datetime.strptime(fd, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.fromdate = None
+            else:
+                employee.fromdate = None
+
+            if td:
+                try:
+                    employee.todate = datetime.strptime(td, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.todate = None
+            else:
+                employee.todate = None
+
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Work Experience:", e)
+            error = "yes"
+
+    return render(request, "workexperience.html", locals())
+
+
+def voluntarywork(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = VoluntaryWork.objects.get_or_create(user=user)     
+    
+    if request.method=="POST":
+        try:
+            org=request.POST['organization']
+            df=request.POST['datefrom']
+            dt=request.POST['dateto']   
+            noh=request.POST['numberofhours']   
+            pn=request.POST['position']  
+
+            employee.organization = org
+            employee.datefrom = df
+            employee.dateto = dt
+            employee.numberofhours = noh
+            employee.position = pn
+        
+
+            if df:
+                try:
+                    employee.datefrom = datetime.strptime(df, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.datefrom = None
+            else:
+                employee.datefrom = None
+
+            if dt:
+                try:
+                    employee.dateto = datetime.strptime(dt, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.dateto= None
+            else:
+                employee.dateto = None
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Voluntary Work:", e)
+            error = "yes"
+
+    return render(request, "voluntarywork.html", locals())
+
+
+def learninganddevelopment(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = LearningandDevelopment.objects.get_or_create(user=user)     
+    
+    if request.method=="POST":
+        try:
+            tol=request.POST['titleoflearning']
+            dfm=request.POST['datefrom']
+            dto=request.POST['dateto']   
+            nohs=request.POST['numberofhours']   
+            toi=request.POST['typeofid']  
+            cd=request.POST['conducted']  
+          
+            employee.titleoflearning = tol
+            employee.datefrom = dfm
+            employee.dateto = dto
+            employee.typeofid = toi
+            employee.conducted = cd
+
+            if nohs.strip():  
+                try:
+                    employee.numberofhours = int(nohs)
+                except ValueError:
+                    employee.numberofhours = None
+            else:
+                employee.numberofhours = None
+
+            if dfm:
+                try:
+                    employee.datefrom = datetime.strptime(dfm, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.datefrom = None
+            else:
+                employee.datefrom = None
+
+            if dto:
+                try:
+                    employee.dateto = datetime.strptime(dto, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.dateto= None
+            else:
+                employee.dateto = None
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Learning and Development:", e)
+            error = "yes"
+
+    return render(request, "learninganddevelopment.html", locals())
+
+def otherinformation(request):
+    if not request.user.is_authenticated:
+        return redirect("/eLogin")
+    error=""
+    user=request.user
+
+    employee, created = OtherInformation.objects.get_or_create(user=user)     
+    
+    if request.method=="POST":
+        try:
+            sh=request.POST.get['skillshobbies']
+            rec=request.POST.get['recognition']
+            org=request.POST.get['organizations']
+            ra3=request.POST.get['relatedaffinityb3rddegree']
+            ra4=request.POST.get['relatedaffinityb4thdegree']
+            rad=request.POST.get['relatedaffinitydetails']
+            ao=request.POST.get['administrativeoffense']
+            aod=request.POST.get['administrativeoffensedetails']
+            ccc=request.POST.get['criminallychargedbeforecourt']
+            ccd=request.POST.get['criminallychargeddetails']
+            cdf=request.POST.get['criminallychargeddatefiled']
+            ccs=request.POST.get['criminallychargedstatuscase']
+            cov=request.POST.get['crimeorviolation']
+            cd=request.POST.get['crimedetails']
+            sfs=request.POST.get['separatedfromservice']
+            ssd=request.POST.get['separatedfromservicedetails']
+            lel=request.POST.get['localelectionlastyear']
+            led=request.POST.get['localelectiondetails']
+            rc3=request.POST.get['resignedtocampaignlast3months']
+            rcd=request.POST.get['resignedtocampaigndetails']
+            ais=request.POST.get['acquiredimmigrantstatus']
+            isc=request.POS.getT['immigrantstatuscountry']
+            ig=request.POST.get['indigenousgroup']
+            ign=request.POST.get['indigenousgroupidno']
+            pwd=request.POST.get['personwithdisability']
+            pdn=request.POST.get['personwithdisabilityidno']
+            sp=request.POST.get['soloparent']
+            spn=request.POST.get['soloparentidno']
+            r1n=request.POST.get['ref1name']
+            r1a=request.POST.get['ref1address']
+            r1t=request.POST.get['ref1telno']
+            r2n=request.POST.get['ref2name']
+            r2a=request.POST.get['ref2address']
+            r2t=request.POST.get['ref2telno']
+            r3n=request.POST.get['ref3name']
+            r3a=request.POST.get['ref3address']
+            r3t=request.POST.get['ref3telno']
+            gid=request.POST.get['goviddescription']
+            gin=request.POST.get['govidnumber']
+            gdp=request.POST.get['goviddateplaceissued']
+
+            employee.skillshobbies = sh
+            employee.recognition = rec
+            employee.organizations = org
+            employee.relatedaffinityb3rddegree = ra3
+            employee.relatedaffinityb4thdegree = ra4
+            employee.relatedaffinitydetails = rad
+            employee.administrativeoffense = ao
+            employee.administrativeoffensedetails = aod
+            employee.criminallychargedbeforecourt = ccc
+            employee.criminallychargeddetails = ccd
+            employee.criminallychargedstatuscase = ccs
+            employee.crimeorviolation = cov
+            employee.crimedetails = cd
+            employee.separatedfromservice = sfs
+            employee.separatedfromservicedetails = ssd
+            employee.localelectionlastyear = lel
+            employee.localelectiondetails = led
+            employee.resignedtocampaignlast3months = rc3
+            employee.resignedtocampaigndetails = rcd
+            employee.acquiredimmigrantstatus = ais
+            employee.immigrantstatuscountry = isc
+            employee.indigenousgroup = ig
+            employee.indigenousgroupidno = ign
+            employee.personwithdisability = pwd
+            employee.personwithdisabilityidno = pdn
+            employee.soloparent = sp
+            employee.soloparentidno = spn
+            employee.ref1name = r1n
+            employee.ref1address = r1a
+            employee.ref1telno = r1t
+            employee.ref2name = r2n
+            employee.ref2address = r2a
+            employee.ref2telno = r2t
+            employee.ref3name = r3n
+            employee.ref3address = r3a
+            employee.ref3telno = r3t
+            employee.goviddescription = gid
+            employee.govidnumber = gin
+            employee.goviddateplaceissued = gdp
+
+            if cdf.strip():
+                try:
+                    employee.criminallychargeddatefiled = datetime.strptime(cdf, "%Y-%m-%d").date()
+                except ValueError:
+                    employee.criminallychargeddatefiled = None
+            else:
+                employee.criminallychargeddatefiled = None
+
+            employee.save()
+            error = "no"
+
+        except Exception as e:
+            print("Error saving Other Information:", e)
+            error = "yes"
+
+    return render(request, "otherinformation.html", locals())
+    
 def admin_dashboard(request):
     if not request.user.is_authenticated:
         return redirect("/administrator")
