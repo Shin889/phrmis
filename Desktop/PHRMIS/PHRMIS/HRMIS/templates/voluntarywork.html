@@ -9,80 +9,75 @@ HRMIS | Voluntary Work
 {% endblock %}
 
 {% block content %}
-<!-- BEGIN #content -->
 <div id="content" class="app-content">
     <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
         {% csrf_token %}
-        <!-- BEGIN breadcrumb -->
-        <!-- <ol class="breadcrumb float-xl-end">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
-            <li class="breadcrumb-item active">Data</li>
-        </ol> -->
-        <!-- END breadcrumb -->
-        <!-- BEGIN page-header -->
-        <h1 class="page-header">Voluntary Work</h1>
-        <!-- END page-header -->
-
-        <!-- BEGIN panel -->
+        
+        <h1 class="page-header"><i class="fas fa-hand-holding-heart me-2"></i>Voluntary Work</h1>
         <div class="panel panel-inverse">
             <div class="panel-heading">
-                <h4 class="panel-title">Voluntary Work Details</h4>
+                <h4 class="panel-title"><i class="fas fa-hands-helping me-2"></i>Voluntary Work Details</h4>
                 <div class="panel-heading-btn">
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a> -->
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a> -->
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
                             class="fa fa-minus"></i></a>
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a> -->
                 </div>
             </div>
             <div class="panel-body">
+                
                 <div class="mb-3">
                     <label class="form-label">Organization</label>
-                    <input class="form-control" type="text" id="en" name="organization" placeholder="Organization Name"
-                        value="{{employee.organization}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-users-cog"></i></span>
+                        <input class="form-control" type="text" id="en" name="organization" placeholder="Organization Name"
+                            value="{{employee.organization}}" />
+                    </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">Date From</label>
-                    <input class="form-control" type="date" id="df" name="datefrom" placeholder="Date From"
-                       value="{{employee.datefrom|date:'Y-m-d'}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                        <input class="form-control" type="date" id="df" name="datefrom" placeholder="Date From"
+                           value="{{employee.datefrom|date:'Y-m-d'}}" />
+                    </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">Date To</label>
-                    <input type="date" class="form-control" id="dt" name="dateto" placeholder="Date To"
-                        value="{{employee.dateto|date:'Y-m-d'}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
+                        <input type="date" class="form-control" id="dt" name="dateto" placeholder="Date To"
+                            value="{{employee.dateto|date:'Y-m-d'}}" />
+                    </div>
                 </div>
-             
-                 <div class="mb-3">
+              
+                <div class="mb-3">
                     <label class="form-label">Number of Hours</label>
-                    <input type="text" class="form-control" id="noh" name="numberofhours" placeholder="Number of Hours"
-                        value="{{employee.numberofhours}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-hourglass-half"></i></span>
+                        <input type="text" class="form-control" id="noh" name="numberofhours" placeholder="Number of Hours Rendered"
+                            value="{{employee.numberofhours}}" />
+                    </div>
                 </div>
-                  <div class="mb-3">
-                    <label class="form-label">Position</label>
-                    <input type="text" class="form-control" id="pn" name="position" placeholder="Position"
-                        value="{{employee.position}}" />
+                
+                <div class="mb-3">
+                    <label class="form-label">Position / Nature of Work</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input type="text" class="form-control" id="pn" name="position" placeholder="Position / Nature of Work"
+                            value="{{employee.position}}" />
+                    </div>
                 </div>
+                
             </div>
         </div>
 
-        <!-- END panel -->
-
-    <div class="text-start mt-3">
-        <button type="submit" class="btn btn-dark px-4">Save</button>
+        <div class="text-end mt-3">
+        <button type="submit" class="btn btn-dark px-4"><i class="fas fa-save me-2"></i>Save</button>
     </div>  
 
     </form>
 </div>
-<!-- END #content -->
-<!-- <script type="text/javascript">
-    function getdates()
-    {
-        var date = new Date();
-        document.getElementById("dob").innerHTML = date;
-    }
-</script> -->
-<!-- BEGIN Error Message -->
 {% if error == "no" %}
 <script>
     alert('Voluntary Work Updated Successfully');
@@ -94,6 +89,4 @@ HRMIS | Voluntary Work
     alert('Something went wrong, try again.');
 </script>
 {% endif %}
-<!-- END Error Message -->
-
 {% endblock %}

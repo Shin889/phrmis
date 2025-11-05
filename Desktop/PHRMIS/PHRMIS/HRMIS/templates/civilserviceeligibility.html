@@ -9,84 +9,84 @@ HRMIS | Civil Service Eligibility
 {% endblock %}
 
 {% block content %}
-<!-- BEGIN #content -->
 <div id="content" class="app-content">
     <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
         {% csrf_token %}
-        <!-- BEGIN breadcrumb -->
-        <!-- <ol class="breadcrumb float-xl-end">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
-            <li class="breadcrumb-item active">Data</li>
-        </ol> -->
-        <!-- END breadcrumb -->
-        <!-- BEGIN page-header -->
-        <h1 class="page-header">Civil Service Eligibility</h1>
-        <!-- END page-header -->
-
-        <!-- BEGIN panel -->
+        
+        <h1 class="page-header"><i class="fas fa-certificate me-2"></i>Civil Service Eligibility</h1>
         <div class="panel panel-inverse">
             <div class="panel-heading">
-                <h4 class="panel-title">Civil Service Eligibility</h4>
+                <h4 class="panel-title"><i class="fas fa-file-invoice me-2"></i>Eligibility Details</h4>
                 <div class="panel-heading-btn">
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a> -->
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a> -->
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
                             class="fa fa-minus"></i></a>
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a> -->
                 </div>
             </div>
             <div class="panel-body">
+                
                 <div class="mb-3">
                     <label class="form-label">Eligibility Name</label>
-                    <input class="form-control" type="text" id="en" name="eligibilityname" placeholder="Eligibility Name"
-                        value="{{employee.eligibilityname}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-award"></i></span>
+                        <input class="form-control" type="text" id="en" name="eligibilityname" placeholder="Eligibility Name (e.g., Career Service Professional)"
+                            value="{{employee.eligibilityname}}" />
+                    </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">Rating</label>
-                    <input class="form-control" type="text" id="sn" name="rating" placeholder="Rating"
-                        value="{{employee.rating}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-percent"></i></span>
+                        <input class="form-control" type="text" id="sn" name="rating" placeholder="Rating (e.g., 85.00)"
+                            value="{{employee.rating}}" />
+                    </div>
                 </div>
+                
                 <div class="mb-3">
                     <label class="form-label">Date of Examination</label>
-                    <input type="date" class="form-control" id="doe" name="dateofexamination" placeholder="Date of Examination"
-                        value="{{employee.dateofexamination|date:'Y-m-d'}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        <input type="date" class="form-control" id="doe" name="dateofexamination" placeholder="Date of Examination"
+                            value="{{employee.dateofexamination|date:'Y-m-d'}}" />
+                    </div>
                 </div>
-                 <div class="mb-3">
+                
+                <div class="mb-3">
                     <label class="form-label">Place of Examination</label>
-                    <input type="text" class="form-control" id="poe" name="placeofexamination" placeholder="Place of Examination"
-                        value="{{employee.placeofexamination}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <input type="text" class="form-control" id="poe" name="placeofexamination" placeholder="Place of Examination"
+                            value="{{employee.placeofexamination}}" />
+                    </div>
                 </div>
-                 <div class="mb-3">
-                    <label class="form-label">License Number</label>
-                    <input type="text" class="form-control" id="ln" name="licensenumber" placeholder="License Number"
-                        value="{{employee.licensenumber}}" />
+                
+                <div class="mb-3">
+                    <label class="form-label">License Number (If Applicable)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                        <input type="text" class="form-control" id="ln" name="licensenumber" placeholder="License Number"
+                            value="{{employee.licensenumber}}" />
+                    </div>
                 </div>
-                  <div class="mb-3">
-                    <label class="form-label">License Validity</label>
-                    <input type="text" class="form-control" id="lv" name="licensevalidity" placeholder="License Validity"
-                        value="{{employee.licensevalidity}}" />
+                
+                <div class="mb-3">
+                    <label class="form-label">License Validity (If Applicable)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+                        <input type="text" class="form-control" id="lv" name="licensevalidity" placeholder="License Validity/Expiry Date"
+                            value="{{employee.licensevalidity}}" />
+                    </div>
                 </div>
+                
             </div>
         </div>
 
-        <!-- END panel -->
-
-    <div class="text-start mt-3">
-        <button type="submit" class="btn btn-dark px-4">Save</button>
+        <div class="text-end mt-3">
+        <button type="submit" class="btn btn-dark px-4"><i class="fas fa-save me-2"></i>Save</button>
     </div>  
 
     </form>
 </div>
-<!-- END #content -->
-<!-- <script type="text/javascript">
-    function getdates()
-    {
-        var date = new Date();
-        document.getElementById("dob").innerHTML = date;
-    }
-</script> -->
-<!-- BEGIN Error Message -->
 {% if error == "no" %}
 <script>
     alert('Civil Service Eligibility Updated Successfully');
@@ -98,6 +98,4 @@ HRMIS | Civil Service Eligibility
     alert('Something went wrong, try again.');
 </script>
 {% endif %}
-<!-- END Error Message -->
-
 {% endblock %}

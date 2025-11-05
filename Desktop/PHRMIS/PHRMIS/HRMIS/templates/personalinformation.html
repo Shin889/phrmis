@@ -9,31 +9,16 @@ HRMIS | Personal Information
 {% endblock %}
 
 {% block content %}
-<!-- BEGIN #content -->
 <div id="content" class="app-content">
     <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
         {% csrf_token %}
-        <!-- BEGIN breadcrumb -->
-        <!-- <ol class="breadcrumb float-xl-end">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:;">Library</a></li>
-            <li class="breadcrumb-item active">Data</li>
-        </ol> -->
-        <!-- END breadcrumb -->
-        <!-- BEGIN page-header -->
-        <h1 class="page-header">Personal Information</h1>
-        <!-- END page-header -->
-
-        <!-- BEGIN panel -->
+        <h1 class="page-header"><i class="fas fa-user-tie me-2"></i>Personal Information</h1>
         <div class="panel panel-inverse">
             <div class="panel-heading">
-                <h4 class="panel-title">Personal Details</h4>
+                <h4 class="panel-title"><i class="fas fa-info-circle me-2"></i>Personal Details</h4>
                 <div class="panel-heading-btn">
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a> -->
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a> -->
                     <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
                             class="fa fa-minus"></i></a>
-                    <!-- <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a> -->
                 </div>
             </div>
             <div class="panel-body">
@@ -41,279 +26,378 @@ HRMIS | Personal Information
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label">First Name</label>
-                            <input class="form-control" type="text" name="firstname" placeholder="First Name"
-                                value="{{employee.user.first_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                <input class="form-control" type="text" name="firstname" placeholder="First Name"
+                                    value="{{employee.user.first_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                    oninvalid="setCustomValidity('Must contain characters only.')" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label">Middle Name</label>
-                            <input class="form-control" type="text" name="middlename" placeholder="Middle Name"
-                                value="{{employee.middlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                <input class="form-control" type="text" name="middlename" placeholder="Middle Name"
+                                    value="{{employee.middlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                    oninvalid="setCustomValidity('Must contain characters only.')" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label">Last Name</label>
-                            <input class="form-control" type="text" name="lastname" placeholder="Last Name"
-                                value="{{employee.user.last_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                <input class="form-control" type="text" name="lastname" placeholder="Last Name"
+                                    value="{{employee.user.last_name}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                    oninvalid="setCustomValidity('Must contain characters only.')" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label">Name Extension</label>
-                            <input class="form-control" type="text" name="nameextension" placeholder="Name Extension"
-                                value="{{employee.nameextension}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                                oninvalid="setCustomValidity('Must contain characters only.')" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-angle-double-right"></i></span>
+                                <input class="form-control" type="text" name="nameextension" placeholder="Name Extension"
+                                    value="{{employee.nameextension}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                                    oninvalid="setCustomValidity('Must contain characters only.')" />
+                            </div>
                         </div>
                     </div>
                 </div>
-   
-               
+        
+                
                 <div class="mb-3">
                     <label class="form-label">Employee Number</label>
-                    <input class="form-control" type="text" name="employeenumber" placeholder="00-000"
-                        value="{{employee.employeenumber}}" id="enumber" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                        <input class="form-control" type="text" name="employeenumber" placeholder="00-000"
+                            value="{{employee.employeenumber}}" id="enumber" />
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email Address</label>
-                    <input class="form-control" type="text" name="emailaddress" placeholder="Email Address"
-                        value="{{employee.user.username}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input class="form-control" type="text" name="emailaddress" placeholder="Email Address"
+                            value="{{employee.user.username}}" />
+                    </div>
                 </div>
-                <!-- <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input class="form-control" type="password" name="pwd" placeholder="Password" value="{{employee.user.password}}" />
-                </div> -->
+                
                 <div class="mb-3">
                     <label class="form-label">Sex</label>
-                    <select class="form-select" name="sex">
-                        <option>---</option>
-                        <option value="Male" {% if employee.sex == "Male" %}selected{% endif %}>Male</option>
-                        <option value="Female" {% if employee.sex == "Female" %}selected{% endif %}>Female</option>
-                    </select>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                        <select class="form-select" name="sex">
+                            <option>---</option>
+                            <option value="Male" {% if employee.sex == "Male" %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if employee.sex == "Female" %}selected{% endif %}>Female</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Civil Status</label>
-                    <select class="form-select" name="civilstatus">
-                        <option>---</option>
-                        <option value="Married" {% if employee.civilstatus == "Married" %} selected {% endif %}>Married
-                        </option>
-                        <option value="Widowed" {% if employee.civilstatus == "Widowed" %} selected {% endif %}>Widowed
-                        </option>
-                        <option value="Separated" {% if employee.civilstatus == "Separated" %} selected {% endif %}>
-                            Separated
-                        </option>
-                        <option value="Divorced" {% if employee.civilstatus == "Divorced" %} selected {% endif %}>Divorced
-                        </option>
-                        <option value="Single" {% if employee.civilstatus == "Single" %} selected {% endif %}>Single
-                        </option>
-                    </select>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-ring"></i></span>
+                        <select class="form-select" name="civilstatus">
+                            <option>---</option>
+                            <option value="Married" {% if employee.civilstatus == "Married" %} selected {% endif %}>Married
+                            </option>
+                            <option value="Widowed" {% if employee.civilstatus == "Widowed" %} selected {% endif %}>Widowed
+                            </option>
+                            <option value="Separated" {% if employee.civilstatus == "Separated" %} selected {% endif %}>
+                                Separated
+                            </option>
+                            <option value="Divorced" {% if employee.civilstatus == "Divorced" %} selected {% endif %}>Divorced
+                            </option>
+                            <option value="Single" {% if employee.civilstatus == "Single" %} selected {% endif %}>Single
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" id="dob" name="dateofbirth" placeholder="Date of Birth"
-                        value="{{employee.dateofbirth|date:'Y-m-d'}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                        <input type="date" class="form-control" id="dob" name="dateofbirth" placeholder="Date of Birth"
+                            value="{{employee.dateofbirth|date:'Y-m-d'}}" />
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Place of Birth</label>
-                    <input type="text" class="form-control" id="pob" name="placeofbirth" placeholder="Place of Birth"
-                        value="{{employee.placeofbirth}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <input type="text" class="form-control" id="pob" name="placeofbirth" placeholder="Place of Birth"
+                            value="{{employee.placeofbirth}}" />
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Citizenship</label>
-                    <input type="text" class="form-control" id="cit" name="citizenship" placeholder="Citizenship"
-                        value="{{employee.citizenship}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                        <input type="text" class="form-control" id="cit" name="citizenship" placeholder="Citizenship"
+                            value="{{employee.citizenship}}" />
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Height</label>
-                    <input type="number" class="form-control" id="ht" name="height" placeholder="Height"
-                        value="{{employee.height}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-ruler-combined"></i></span>
+                        <input type="number" class="form-control" id="ht" name="height" placeholder="Height"
+                            value="{{employee.height}}" />
+                        <span class="input-group-text">cm</span>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Weight</label>
-                    <input type="number" class="form-control" id="wt" name="weight" placeholder="Weight"
-                        value="{{employee.weight}}" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-weight-hanging"></i></span>
+                        <input type="number" class="form-control" id="wt" name="weight" placeholder="Weight"
+                            value="{{employee.weight}}" />
+                        <span class="input-group-text">kg</span>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Blood Type</label>
-                    <select class="form-select" name="bloodtype">
-                        <option>---</option>
-                        <option value="A+" {% if employee.bloodtype == "A+" %} selected {% endif %}>A+</option>
-                        <option value="A-" {% if employee.bloodtype == "A-" %} selected {% endif %}>A-</option>
-                        <option value="B+" {% if employee.bloodtype == "B+" %} selected {% endif %}>B+</option>
-                        <option value="B-" {% if employee.bloodtype == "B-" %} selected {% endif %}>B-</option>
-                        <option value="AB+" {% if employee.bloodtype == "AB+" %} selected {% endif %}>AB+</option>
-                        <option value="AB-" {% if employee.bloodtype == "AB-" %} selected {% endif %}>AB-</option>
-                        <option value="O+" {% if employee.bloodtype == "O+" %} selected {% endif %}>O+</option>
-                        <option value="O-" {% if employee.bloodtype == "O-" %} selected {% endif %}>O-</option>
-                    </select>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-tint"></i></span>
+                        <select class="form-select" name="bloodtype">
+                            <option>---</option>
+                            <option value="A+" {% if employee.bloodtype == "A+" %} selected {% endif %}>A+</option>
+                            <option value="A-" {% if employee.bloodtype == "A-" %} selected {% endif %}>A-</option>
+                            <option value="B+" {% if employee.bloodtype == "B+" %} selected {% endif %}>B+</option>
+                            <option value="B-" {% if employee.bloodtype == "B-" %} selected {% endif %}>B-</option>
+                            <option value="AB+" {% if employee.bloodtype == "AB+" %} selected {% endif %}>AB+</option>
+                            <option value="AB-" {% if employee.bloodtype == "AB-" %} selected {% endif %}>AB-</option>
+                            <option value="O+" {% if employee.bloodtype == "O+" %} selected {% endif %}>O+</option>
+                            <option value="O-" {% if employee.bloodtype == "O-" %} selected {% endif %}>O-</option>
+                        </select>
+                    </div>
                 </div>
 
                     <div class="row">
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="gsis" class="form-label">GSIS NO.</label>
-                                <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
-                                    value="{{employee.gsisno}}" />
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                    <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
+                                        value="{{employee.gsisno}}" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="pi" class="form-label">PAGIBIG NO.</label>
-                                <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="sss" class="form-label">SSS NO.</label>
-                                <input type="text" class="form-control" id="sss" name="sssno" placeholder="SSS No."
-                                    value="{{employee.sssno}}" />
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
+                                    <input type="text" class="form-control" id="sss" name="sssno" placeholder="SSS No."
+                                        value="{{employee.sssno}}" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="tin" class="form-label">TIN NO.</label>
-                                <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
-                                    value="{{employee.tinno}}" />
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calculator"></i></span>
+                                    <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
+                                        value="{{employee.tinno}}" />
+                                </div>
                             </div>
                         </div>
                     </div>
 
-            <!-- permanent resident address -->  
+        <hr>
                 <div class="row">
                     <div class="col-md-6">
-                        <h5>Permanent Address</h5>
+                        <h5><i class="fas fa-home me-2"></i>Permanent Address</h5>
                 
                         <div class="mb-3">
                             <label class="form-label">House/Block No.</label>
-                            <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
-                                value="{{employee.permhouseblockno}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <input class="form-control" type="number" id="phb" name="permhouseblockno" placeholder="House/Block Number"
+                                    value="{{employee.permhouseblockno}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Street No.</label>
-                            <input class="form-control" type="text" id="psn" name="permstreetno" placeholder="Street Number"
-                                value="{{employee.permstreetno}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-road"></i></span>
+                                <input class="form-control" type="text" id="psn" name="permstreetno" placeholder="Street Number"
+                                    value="{{employee.permstreetno}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Subdivision/Village</label>
-                            <input class="form-control" type="text" id="psv" name="permsubdivisionvillage" placeholder="Subdivision/Village"
-                                value="{{employee.permsubdivisionvillage}}" />
+                            <div class="input-group">
+                                 <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                <input class="form-control" type="text" id="psv" name="permsubdivisionvillage" placeholder="Subdivision/Village"
+                                    value="{{employee.permsubdivisionvillage}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Barangay</label>
-                            <input class="form-control" type="text" id="pb" name="permbarangay" placeholder="Barangay"
-                                value="{{employee.permbarangay}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                <input class="form-control" type="text" id="pb" name="permbarangay" placeholder="Barangay"
+                                    value="{{employee.permbarangay}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">City/Municipality</label>
-                            <input class="form-control" type="text" id="pcm" name="permcitymunicipality" placeholder="City/Municipality"
-                                value="{{employee.permcitymunicipality}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                <input class="form-control" type="text" id="pcm" name="permcitymunicipality" placeholder="City/Municipality"
+                                    value="{{employee.permcitymunicipality}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Province</label>
-                            <input class="form-control" type="text" id="ppr" name="permprovince" placeholder="Province"
-                                value="{{employee.permprovince}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                <input class="form-control" type="text" id="ppr" name="permprovince" placeholder="Province"
+                                    value="{{employee.permprovince}}" />
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Zip Code</label>
-                            <input class="form-control" type="number" id="pzc" name="permzipcode" placeholder="Zip Code"
-                                value="{{employee.permzipcode}}" />
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                <input class="form-control" type="number" id="pzc" name="permzipcode" placeholder="Zip Code"
+                                    value="{{employee.permzipcode}}" />
+                            </div>
                         </div>
                     </div>
 
-                <!-- temporary add -->
-                <div class="col-md-6">
-                    <h5>Temporary Address</h5>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-truck-loading me-2"></i>Temporary Address</h5>
 
-                    <div class="mb-3">
-                        <label class="form-label">House/Block No.</label>
-                        <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
-                            value="{{employee.temphouseblockno}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">House/Block No.</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <input class="form-control" type="number" id="thb" name="temphouseblockno" placeholder="House/Block Number"
+                                    value="{{employee.temphouseblockno}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Street No.</label>
-                        <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
-                            value="{{employee.tempstreetno}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Street No.</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-road"></i></span>
+                                <input class="form-control" type="text" id="tsn" name="tempstreetno" placeholder="Street Number"
+                                    value="{{employee.tempstreetno}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Subdivision/Village</label>
-                        <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
-                            value="{{employee.tempsubdivisionvillage}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subdivision/Village</label>
+                            <div class="input-group">
+                                 <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                <input class="form-control" type="text" id="tsv" name="tempsubdivisionvillage" placeholder="Subdivision/Village"
+                                    value="{{employee.tempsubdivisionvillage}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Barangay</label>
-                        <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
-                            value="{{employee.tempbarangay}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Barangay</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                <input class="form-control" type="text" id="tb" name="tempbarangay" placeholder="Barangay"
+                                    value="{{employee.tempbarangay}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">City/Municipality</label>
-                        <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
-                            value="{{employee.tempcitymunicipality}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">City/Municipality</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                <input class="form-control" type="text" id="tcm" name="tempcitymunicipality" placeholder="City/Municipality"
+                                    value="{{employee.tempcitymunicipality}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Province</label>
-                        <input class="form-control" type="text" id="tp" name="tempprovince" placeholder="Province"
-                            value="{{employee.tempprovince}}" />
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Province</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                <input class="form-control" type="text" id="tp" name="tempprovince" placeholder="Province"
+                                    value="{{employee.tempprovince}}" />
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Zip Code</label>
-                        <input class="form-control" type="number" id="tzc" name="tempzipcode" placeholder="Zip Code"
-                            value="{{employee.tempzipcode}}" />
+                        <div class="mb-3">
+                            <label class="form-label">Zip Code</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-code"></i></span>
+                                <input class="form-control" type="number" id="tzc" name="tempzipcode" placeholder="Zip Code"
+                                    value="{{employee.tempzipcode}}" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Telephone Number</label>
-                    <input class="form-control" type="tel" id="tpn" name="telephonenumber"
-                        placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephonenumber}}" />
+        
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Telephone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input class="form-control" type="tel" id="tpn" name="telephonenumber"
+                                    placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephonenumber}}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                <input class="form-control" type="tel" id="mbn" name="mobilephonenumber"
+                                    placeholder="Mobile Number (e.g., 09XX-XXX-XXXX)" value="{{employee.mobilephonenumber}}" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Mobile Number</label>
-                    <input class="form-control" type="tel" id="mbn" name="mobilephonenumber"
-                        placeholder="Mobile Number (e.g., 09XX-XXX-XXXX)" value="{{employee.mobilephonenumber}}" />
-                </div>
+        
                 <div class="mb-3">
                     <label class="form-label">Profile Picture</label>
-                    <input class="form-control" type="file" id="pp" name="profilepicture" accept="image/*">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-camera"></i></span>
+                        <input class="form-control" type="file" id="pp" name="profilepicture" accept="image/*">
+                    </div>
                 </div>
 
             </div>
         </div>
 
-        <!-- END panel -->
-
-    <div class="text-start mt-3">
-        <button type="submit" class="btn btn-dark px-4">Save</button>
+        <div class="text-end mt-3">
+        <button type="submit" class="btn btn-dark px-4"><i class="fas fa-save me-2"></i>Save</button>
     </div>  
 
     </form>
 </div>
-<!-- END #content -->
-<!-- <script type="text/javascript">
-    function getdates()
-    {
-        var date = new Date();
-        document.getElementById("dob").innerHTML = date;
-    }
-</script> -->
-<!-- BEGIN Error Message -->
 {% if error == "no" %}
 <script>
     alert('Personal Information Updated Successfully');
@@ -325,6 +409,4 @@ HRMIS | Personal Information
     alert('Something went wrong, try again.');
 </script>
 {% endif %}
-<!-- END Error Message -->
-
 {% endblock %}
