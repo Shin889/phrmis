@@ -69,6 +69,14 @@
 
 				<!-- BEGIN register-content -->
 				<div class="register-content">
+					 {% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+								{{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							</div>
+						{% endfor %}
+					{% endif %}
 					<form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()">
 						{% csrf_token %}
 						<div class="mb-3">
@@ -127,7 +135,7 @@
 		<!-- END register -->
 
 		<!-- BEGIN Error Message -->
-		{% if error == "no" %}
+		<!-- {% if error == "no" %}
 		<script>
 			alert('Sign up Successful');
 			window.location = ("eLogin");
@@ -138,7 +146,7 @@
 			alert('Something went wrong, please try again.');
 			return false;
 		</script>
-		{% endif %}
+		{% endif %} -->
 		<!-- END Error Message -->
 
 		<!-- BEGIN scroll-top-btn -->

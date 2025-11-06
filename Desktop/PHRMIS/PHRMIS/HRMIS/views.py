@@ -4,6 +4,9 @@ from django.db import models
 from django.db.models import Count
 from django.shortcuts import redirect, render
 from datetime import datetime
+from django.db import IntegrityError
+from django.contrib import messages
+from .models import WorkExperience, PersonalInformation
 
 # Create your views here.
 
@@ -30,6 +33,23 @@ def admin(request):
         except:
             error="yes"
     return render(request, "admin.html", locals())
+
+def doLogin(request):
+    if request.method!="POST":
+        return HttpResponse("Method Not Allowed")
+    else:
+        user=EmailBackEnd.authenticate(request,username=request.POST.get("email"),password=request.POST.get("password"))
+        if user!=None:
+            login(request,user)
+            return HttpResponse("Email : "+request.POST.get("email")+" Password : "+request.POST.get("password"))
+        else:
+            return HttpResponse("Invalid Login")
+
+def getUserDetails(request):
+    if request.user!=None:
+        return HttpResponse("User : "+request.user.email+" User Type : "+str(request.user.usertype))
+    else:
+        return HttpResponse("Please Login First")
 
 def personalinformation(request):
     if not request.user.is_authenticated:
@@ -305,54 +325,66 @@ def civilserviceeligibility(request):
 def workexperience(request):
     if not request.user.is_authenticated:
         return redirect("/eLogin")
-    error=""
-    user=request.user
 
-    employee, created = WorkExperience.objects.get_or_create(user=user)     
-    
-    if request.method=="POST":
+    error = ""
+    user = request.user
+
+    try:
+        employee = PersonalInformation.objects.get(user=user)
+    except PersonalInformation.DoesNotExist:
+        error = "personal_info_missing"
+        return render(request, "workexperience.html", {"error": error})
+
+    work_entry, created = WorkExperience.objects.get_or_create(employee=employee)
+
+    if request.method == "POST":
         try:
-            pt=request.POST['positiontitle']
-            coa=request.POST['companyofficeagency']
-            ms=request.POST['monthlysalary']
-            sg=request.POST['salarygrade']
-            aps=request.POST['appointmentstatus']
-            gs=request.POST.get('governmentservice')
-            fd=request.POST['fromdate'] 
-            td=request.POST['todate']  
+            pt = request.POST['positiontitle']
+            coa = request.POST['companyofficeagency']
+            ms = request.POST['monthlysalary']
+            sg = request.POST['salarygrade']
+            aps = request.POST['appointmentstatus']
+            gs = request.POST.get('governmentservice')
+            fd = request.POST['fromdate']
+            td = request.POST['todate']
 
-            employee.positiontitle = pt
-            employee.companyofficeagency = coa
-            employee.monthlysalary = ms
-            employee.salarygrade = sg
-            employee.appointmentstatus = aps
-            employee.governmentservice = True if gs else False
+            work_entry.positiontitle = pt
+            work_entry.companyofficeagency = coa
+            work_entry.monthlysalary = ms
+            work_entry.salarygrade = sg
+            work_entry.appointmentstatus = aps
+            work_entry.governmentservice = True if gs else False
 
             if fd:
                 try:
-                    employee.fromdate = datetime.strptime(fd, "%Y-%m-%d").date()
+                    work_entry.fromdate = datetime.strptime(fd, "%Y-%m-%d").date()
                 except ValueError:
-                    employee.fromdate = None
+                    work_entry.fromdate = None
             else:
-                employee.fromdate = None
+                work_entry.fromdate = None
 
             if td:
                 try:
-                    employee.todate = datetime.strptime(td, "%Y-%m-%d").date()
+                    work_entry.todate = datetime.strptime(td, "%Y-%m-%d").date()
                 except ValueError:
-                    employee.todate = None
+                    work_entry.todate = None
             else:
-                employee.todate = None
+                work_entry.todate = None
 
-            employee.save()
+            work_entry.save()
             error = "no"
 
         except Exception as e:
             print("Error saving Work Experience:", e)
             error = "yes"
 
-    return render(request, "workexperience.html", locals())
-
+    work_info = WorkExperience.objects.filter(employee__user=request.user)
+    return render(request, "workexperience.html", {
+        "employee": employee,
+        "work_entry": work_entry,
+        "work_info": work_info,
+        "error": error,
+    })
 
 def voluntarywork(request):
     if not request.user.is_authenticated:
@@ -568,10 +600,31 @@ def otherinformation(request):
 def admin_dashboard(request):
     if not request.user.is_authenticated:
         return redirect("/administrator")
-    employee=PersonalInformation.objects.all()
-    colleged=PersonalInformation.objects.values('collegedepartment').order_by('collegedepartment').annotate(the_count=Count('collegedepartment'))
-    #print(colleged)
-    return render(request, "admin_dashboard.html", locals())
+
+    employee = PersonalInformation.objects.select_related('user').all()
+
+    work_info = WorkExperience.objects.select_related('employee', 'employee__user').all()
+
+    positiontitle = (
+        WorkExperience.objects
+        .values('positiontitle')
+        .order_by('positiontitle')
+        .annotate(the_count=Count('positiontitle'))
+    )
+
+    office_counts = (
+        WorkExperience.objects
+        .values('companyofficeagency')
+        .order_by('companyofficeagency')
+        .annotate(the_count=Count('companyofficeagency'))
+    )
+
+    return render(request, "admin_dashboard.html", {
+        'employee': employee,
+        'work_info': work_info,
+        'positiontitle': positiontitle,
+        'office_counts': office_counts,
+    })
 
 def home(request):
     if not request.user.is_authenticated:
@@ -585,20 +638,25 @@ def logoutUser(request):
     return redirect("/")
 
 def register(request):
-    error=""
-    if request.method=="POST":
-        fn=request.POST['firstname']
-        ln=request.POST['lastname']
-        en=request.POST['employeenumber']
-        ea=request.POST['emailaddress']
-        password=request.POST['pwd']
-        try:
-            user=User.objects.create_user(first_name=fn,last_name=ln,username=ea,password=password)
-            PersonalInformation.objects.create(user=user,employeenumber=en)
-            error = "no"
-        except:
-            error = "yes"
-    return render(request, "register.html", locals())
+    if request.method == "POST":
+        fn = request.POST['firstname']
+        ln = request.POST['lastname']
+        en = request.POST['employeenumber']
+        ea = request.POST['emailaddress']
+        password = request.POST['pwd']
+
+        if PersonalInformation.objects.filter(employeenumber=en).exists():
+            messages.error(request, "Employee number already exists.")
+        else:
+            try:
+                user = User.objects.create_user(first_name=fn, last_name=ln, username=ea, password=password)
+                PersonalInformation.objects.create(user=user, employeenumber=en)
+                messages.success(request, "Registration successful.")
+                return redirect('showeLogin')  
+            except IntegrityError:
+                messages.error(request, "An unexpected error occurred.")
+
+    return render(request, "register.html")
 
 def showeLogin(request):
     error=""

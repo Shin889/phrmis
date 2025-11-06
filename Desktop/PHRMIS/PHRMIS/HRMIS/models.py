@@ -52,8 +52,8 @@ class PersonalInformation(models.Model):
     nameextension = NameField(max_length=50, choices=Name_Extension_Choices)
     middlename = NameField(max_length=20)
 
-    employeenumber = models.CharField(max_length=10)
-
+    employeenumber = models.CharField(max_length=10, unique=True)
+    
     dateofbirth = models.DateField(null=True)
     citizenship = models.CharField(max_length=30)
     placeofbirth = models.CharField(max_length=50)
@@ -128,7 +128,7 @@ class CivilServiceEligibility(models.Model):
     licensevalidity = models.DateField(null=True, blank=True)
 
 class WorkExperience(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    employee = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE, related_name='work_experiences')
     positiontitle = models.CharField(max_length=30)
     companyofficeagency = models.CharField(max_length=50)
     monthlysalary = models.CharField(max_length=10)
@@ -137,6 +137,9 @@ class WorkExperience(models.Model):
     governmentservice = models.BooleanField(default=False)
     fromdate = models.DateField(null=True, blank=True)
     todate = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.employee.employeenumber} - {self.positiontitle}"
 
 class VoluntaryWork(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

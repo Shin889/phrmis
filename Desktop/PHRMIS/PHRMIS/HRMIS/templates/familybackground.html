@@ -5,9 +5,6 @@
 HRMIS | Family Background
 {% endblock %}
 
-{% block sidebar %}
-{% endblock %}
-
 {% block content %}
 <div id="content" class="app-content">
     <form method="POST" class="fs-13px" name="signup" onsubmit="return checkpassword()" enctype="multipart/form-data">
@@ -21,79 +18,7 @@ HRMIS | Family Background
                             class="fa fa-minus"></i></a>
                 </div>
             </div>
-            <div class="panel-body">
-                
-                <div class="mb-3">
-                    <label class="form-label">Spouse Surname</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                        <input class="form-control" type="text" id="ssn" name="spousesurname" placeholder="Spouse Surname"
-                            value="{{employee.spousesurname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" required />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Spouse First Name</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                        <input class="form-control" type="text" id="sfn" name="spousefirstname" placeholder="Spouse First Name"
-                            value="{{employee.spousefirstname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
-                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" required />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Spouse Middle Name</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                        <input class="form-control" type="text" id="smn" name="spousemiddlename" placeholder="Spouse Middle Name (e.g., N/A if none)"
-                            value="{{employee.spousemiddlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]*"
-                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" />
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Occupation</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                        <input class="form-control" type="text" id="occ" name="occupation" placeholder="Occupation"
-                            value="{{employee.occupation}}" />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Employer</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-building"></i></span>
-                        <input class="form-control" type="text" id="emp" name="employer" placeholder="Employer"
-                            value="{{employee.employer}}" />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Business Address</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
-                        <input class="form-control" type="text" id="ba" name="businessaddress" placeholder="Business Address"
-                            value="{{employee.businessaddress}}" />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Telephone</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
-                        <input class="form-control" type="tel" id="tp" name="telephone"
-                            placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephone}}" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-inverse">
-    <div class="panel-heading">
-        <h4 class="panel-title"><i class="fas fa-child me-2"></i>Children's Information</h4>
-        <div class="panel-heading-btn">
-            <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
-                    class="fa fa-minus"></i></a>
-        </div>
-    </div>
+          
     <div class="panel-body">
         
         <div id="children_container">
@@ -339,6 +264,72 @@ HRMIS | Family Background
             </div>
         </div>
 
+          <div class="panel-body">
+                
+                <div class="mb-3">
+                    <label class="form-label">Spouse Surname</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input class="form-control" type="text" id="ssn" name="spousesurname" placeholder="Spouse Surname"
+                            value="{{employee.spousesurname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" required />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Spouse First Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input class="form-control" type="text" id="sfn" name="spousefirstname" placeholder="Spouse First Name"
+                            value="{{employee.spousefirstname}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]+"
+                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" required />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Spouse Middle Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                        <input class="form-control" type="text" id="smn" name="spousemiddlename" placeholder="Spouse Middle Name (e.g., N/A if none)"
+                            value="{{employee.spousemiddlename}}" style="text-transform: capitalize;" pattern="[a-zA-Z ]*"
+                            oninvalid="this.setCustomValidity('Must contain characters only.')" oninput="this.setCustomValidity('')" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Occupation</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                        <input class="form-control" type="text" id="occ" name="occupation" placeholder="Occupation"
+                            value="{{employee.occupation}}" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Employer</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-building"></i></span>
+                        <input class="form-control" type="text" id="emp" name="employer" placeholder="Employer"
+                            value="{{employee.employer}}" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Business Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                        <input class="form-control" type="text" id="ba" name="businessaddress" placeholder="Business Address"
+                            value="{{employee.businessaddress}}" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telephone</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
+                        <input class="form-control" type="tel" id="tp" name="telephone"
+                            placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephone}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
         <div class="text-end mt-3">
             <button type="submit" class="btn btn-dark px-4"><i class="fas fa-save me-2"></i>Save</button>
         </div> 

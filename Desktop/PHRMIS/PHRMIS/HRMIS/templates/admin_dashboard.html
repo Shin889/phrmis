@@ -1,0 +1,312 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block title %}
+    HRMIS | Administrator
+{% endblock %}
+
+{% block sidebar %}
+
+<!-- BEGIN #sidebar -->
+<div id="sidebar" class="app-sidebar">
+    <!-- BEGIN scrollbar -->
+    <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+        <!-- BEGIN menu -->
+        <div class="menu">
+            <div class="menu-profile">
+                <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
+                    <div class="menu-profile-cover with-shadow"></div>
+                    <div class="menu-profile-image menu-profile-image-icon bg-gray-900 text-gray-600">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="menu-profile-info">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <!-- {{request.user.username}} | {{request.user.email}} -->
+                                Administrator
+                            </div>
+                            <!-- <div class="menu-caret ms-auto"></div> -->
+                        </div>
+                        <!-- <small>Administrator</small> -->
+                    </div>
+                </a>
+            </div>
+            <!-- <div id="appSidebarProfileMenu" class="collapse">
+                <div class="menu-item pt-5px">
+                    <a href="javascript:;" class="menu-link">
+                        <div class="menu-icon"><i class="fa fa-cog"></i></div>
+                        <div class="menu-text">Settings</div>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="javascript:;" class="menu-link">
+                        <div class="menu-icon"><i class="fa fa-pencil-alt"></i></div>
+                        <div class="menu-text"> Send Feedback</div>
+                    </a>
+                </div>
+                <div class="menu-item pb-5px">
+                    <a href="javascript:;" class="menu-link">
+                        <div class="menu-icon"><i class="fa fa-question-circle"></i></div>
+                        <div class="menu-text"> Helps</div>
+                    </a>
+                </div>
+                <div class="menu-divider m-0"></div>
+            </div> -->
+            <div class="menu-header">Navigation</div>
+            <div class="menu-item active">
+                <a href="adminhome" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fas fa-home fa-fw"></i>
+                    </div>
+                    <div class="menu-text">Home</div>
+                </a>
+            </div>
+            <!-- <div class="menu-item">
+                <a href="profile" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-sitemap"></i>
+                    </div>
+                    <div class="menu-text">Profile</div>
+                </a>
+            </div> -->
+            <div class="menu-item">
+                <a href="logoutUser" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-sign-outc"></i>
+                    </div>
+                    <div class="menu-text">Logout</div>
+                </a>
+            </div>
+            <!-- <div class="menu-item">
+                <a href="index.html" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-sitemap"></i>
+                    </div>
+                    <div class="menu-text">Education</div>
+                </a>
+            </div>  
+            <div class="menu-item has-sub">
+                <a href="javascript:;" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-align-left"></i>
+                    </div>
+                    <div class="menu-text">Menu Level</div>
+                    <div class="menu-caret"></div>
+                </a>
+                <div class="menu-submenu">
+                    <div class="menu-item has-sub">
+                        <a href="javascript:;" class="menu-link">
+                            <div class="menu-text">Menu 1.1</div>
+                            <div class="menu-caret"></div>
+                        </a>
+                        <div class="menu-submenu">
+                            <div class="menu-item has-sub">
+                                <a href="javascript:;" class="menu-link">
+                                    <div class="menu-text">Menu 2.1</div>
+                                    <div class="menu-caret"></div>
+                                </a>
+                                <div class="menu-submenu">
+                                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 3.1</div></a></div>
+                                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 3.2</div></a></div>
+                                </div>
+                            </div>
+                            <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 2.2</div></a></div>
+                            <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 2.3</div></a></div>
+                        </div>
+                    </div>
+                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 1.2</div></a></div>
+                    <div class="menu-item"><a href="javascript:;" class="menu-link"><div class="menu-text">Menu 1.3</div></a></div>
+                </div>
+            </div> -->
+            
+            <!-- BEGIN minify-button -->
+            <div class="menu-item d-flex">
+                <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i class="fa fa-angle-double-left"></i></a>
+            </div>
+            <!-- END minify-button -->
+            
+        </div>
+        <!-- END menu -->
+    </div>
+    <!-- END scrollbar -->
+</div>
+<div class="app-sidebar-bg"></div>
+<div class="app-sidebar-mobile-backdrop"><a href="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a></div>
+<!-- END #sidebar -->
+{% endblock %}
+
+{% block content %}
+    <!-- BEGIN #content -->
+    <div id="content" class="app-content">
+        <!-- BEGIN panel -->
+         <div class="mb-4 text-center">
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="apex-column-chart"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="apex-pie-chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Employee Details</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table id="data-table-buttons" class="table table-striped table-bordered align-middle">
+                    <thead>
+                        <tr>
+            
+                            <th>Employee Number</th>
+                            <th>Full Name</th>
+                            <th>Position Title</th>
+                            <th>Office</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for w in work_info %}
+                        <tr>
+                            <td>{{ w.employee.employeenumber }}</td>
+                            <td>{{ w.employee.user.first_name }} {{ w.employee.user.last_name }}</td>
+                            <td>{{ w.positiontitle }}</td>
+                            <td>{{ w.companyofficeagency }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END panel -->
+</div>
+<!-- END #content -->
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var offices = [
+        {% for item in office_counts %}
+            "{{ item.companyofficeagency }}"{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+    var counts = [
+        {% for item in office_counts %}
+            {{ item.the_count }}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    var pieOptions = {
+        chart: {
+            height: 420,
+            type: 'pie',
+            foreColor: '#e5e7eb', 
+            background: 'transparent'
+        },
+        plotOptions: {
+            pie: {
+                size: '95%',
+                expandOnClick: true,
+                offsetY: 10
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            style: { colors: ['#f9fafb'], fontWeight: 500 },
+            dropShadow: { enabled: false }
+        },
+        stroke: { 
+            show: true, 
+            colors: ['#111827'], 
+            width: 2
+        },
+        colors: [
+            '#60A5FA', 
+            '#34D399',
+            '#F59E0B', 
+            '#A78BFA', 
+            '#F87171', 
+            '#FBBF24', 
+            '#22D3EE', 
+            '#EC4899'  
+        ],
+        labels: offices,
+        series: counts,
+        legend: { 
+            position: 'bottom', 
+            labels: { colors: '#d1d5db' },
+            fontSize: '14px'
+        },
+        title: { 
+            text: 'Employee Distribution by Office', 
+            align: 'center',
+            style: { color: '#f3f4f6', fontWeight: '600', fontSize: '16px' }
+        },
+        tooltip: {
+            theme: 'dark',
+            style: { fontSize: '13px' },
+            y: {
+                formatter: function(val) { return val + " employees"; }
+            }
+        }
+    };
+    new ApexCharts(document.querySelector("#apex-pie-chart"), pieOptions).render();
+
+    var columnOptions = {
+        chart: { 
+            type: 'bar', 
+            height: 400, 
+            foreColor: '#e5e7eb', 
+            background: 'transparent' 
+        },
+        plotOptions: { 
+            bar: { 
+                horizontal: false,
+                borderRadius: 6,
+                columnWidth: '55%',
+                distributed: true 
+            } 
+        },
+        colors: [
+            '#60A5FA', '#34D399', '#F59E0B', '#A78BFA',
+            '#F87171', '#FBBF24', '#22D3EE', '#EC4899'
+        ],
+        dataLabels: { 
+            enabled: true, 
+            style: { colors: ['#f9fafb'], fontWeight: 500 } 
+        },
+        series: [{ name: 'Employees', data: counts }],
+        xaxis: { 
+            categories: offices, 
+            title: { style: { color: '#9ca3af' } },
+            labels: { style: { colors: '#cbd5e1' } }
+        },
+        yaxis: {
+            title: { text: 'Employee Count', style: { color: '#9ca3af' } },
+            labels: { style: { colors: '#cbd5e1' } }
+        },
+        title: { 
+            text: 'Employee Count per Office', 
+            align: 'center',
+            style: { color: '#f3f4f6', fontWeight: '600', fontSize: '16px' }
+        },
+        grid: { borderColor: '#374151' },
+        tooltip: {
+            theme: 'dark',
+            y: { formatter: function(val) { return val + " employees"; } }
+        }
+    };
+    new ApexCharts(document.querySelector("#apex-column-chart"), columnOptions).render();
+});
+</script>
+
+{% endblock %}
+
+{% endblock %}
