@@ -6,8 +6,14 @@ from django.shortcuts import redirect, render
 from datetime import datetime
 from django.db import IntegrityError
 from django.contrib import messages
-from .models import WorkExperience, PersonalInformation
-
+from .models import (
+    PersonalInformation, FamilyBackground, EducationalBackground,
+    CivilServiceEligibility, WorkExperience, VoluntaryWork,
+    LearningandDevelopment, OtherInformation
+)
+from django.db.models import Count, OuterRef, Subquery
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 # def index(request):
@@ -45,11 +51,124 @@ def doLogin(request):
         else:
             return HttpResponse("Invalid Login")
 
+def get_employee_details(request):
+    emp_no = request.GET.get("employee_number")
+    employee = get_object_or_404(PersonalInformation, employeenumber=emp_no)
+
+    try:
+        family = FamilyBackground.objects.get(user=employee.user)
+    except FamilyBackground.DoesNotExist:
+        family = None
+    try:
+        education = EducationalBackground.objects.get(user=employee.user)
+    except EducationalBackground.DoesNotExist:
+        education = None
+    try:
+        civil = CivilServiceEligibility.objects.get(user=employee.user)
+    except CivilServiceEligibility.DoesNotExist:
+        civil = None
+    try:
+        work = WorkExperience.objects.filter(employee=employee)
+    except WorkExperience.DoesNotExist:
+        work = None
+    try:
+        volunteer = VoluntaryWork.objects.get(user=employee.user)
+    except VoluntaryWork.DoesNotExist:
+        volunteer = None
+    try:
+        learning = LearningandDevelopment.objects.get(user=employee.user)
+    except LearningandDevelopment.DoesNotExist:
+        learning = None
+    try:
+        other = OtherInformation.objects.get(user=employee.user)
+    except OtherInformation.DoesNotExist:
+        other = None
+
+    data = {
+        "personal": {
+            "name": f"{employee.user.first_name} {employee.user.last_name}",
+            "sex": employee.sex,
+            "civilstatus": employee.civilstatus,
+            "dob": str(employee.dateofbirth),
+            "email": employee.user.email,
+            "contact": employee.mobilenumber,
+            "citizenship": employee.citizenship,
+        },
+        "family": {
+            "spouse": f"{family.spousefirstname} {family.spousesurname}" if family else "",
+            "children": family.nameofchildren if family else "",
+            "father": f"{family.fatherfirstname} {family.fathersurname}" if family else "",
+            "mother": f"{family.motherfirstname} {family.mothersurname}" if family else "",
+        } if family else {},
+        "education": {
+            "level": education.educationlevel if education else "",
+            "school": education.schoolname if education else "",
+            "degree": education.basiceducationdegreecourse if education else "",
+        } if education else {},
+        "work": [
+            {
+                "position": w.positiontitle,
+                "office": w.companyofficeagency,
+                "salary": w.monthlysalary,
+                "from": str(w.fromdate),
+                "to": str(w.todate),
+            }
+            for w in work
+        ] if work else [],
+        "volunteer": {
+            "organization": volunteer.organization if volunteer else "",
+            "from": str(volunteer.datefrom) if volunteer and volunteer.datefrom else "",
+            "to": str(volunteer.dateto) if volunteer and volunteer.dateto else "",
+        } if volunteer else {},
+        "learning": {
+            "title": learning.titleoflearning if learning else "",
+            "hours": learning.numberofhours if learning else "",
+        } if learning else {},
+        "other": {
+            "skills": other.skillshobbies if other else "",
+            "recognitions": other.recognition if other else "",
+            "organizations": other.organizations if other else "",
+        } if other else {},
+    }
+
+    return JsonResponse(data)
+
 def getUserDetails(request):
     if request.user!=None:
         return HttpResponse("User : "+request.user.email+" User Type : "+str(request.user.usertype))
     else:
         return HttpResponse("Please Login First")
+
+def get_employees_by_office(request):
+    office = request.GET.get('office')
+    employees = WorkExperience.objects.filter(companyofficeagency=office).select_related('employee__user')
+    employee_list = [
+        {
+            "employee_number": e.employee.employeenumber,
+            "name": f"{e.employee.user.first_name} {e.employee.user.last_name}",
+            "position": e.positiontitle
+        }
+        for e in employees
+    ]
+    return JsonResponse({"office": office, "employees": employee_list})
+
+def mask_number(num):
+    if not num:
+        return ""
+    num = str(num)
+    digits = ''.join(filter(str.isdigit, num))
+
+    if len(digits) <= 6:
+        return digits
+
+    masked = digits[:3] + "X" * (len(digits) - 6) + digits[-3:]
+
+    if len(masked) == 11:  
+        return f"{masked[:4]}-{masked[4:7]}-{masked[7:]}"
+    elif len(masked) == 10:  
+        return f"{masked[:2]}-{masked[2:6]}-{masked[6:]}"
+    else:
+        return masked
 
 def personalinformation(request):
     if not request.user.is_authenticated:
@@ -57,6 +176,7 @@ def personalinformation(request):
     error=""
     user=request.user
     employee=PersonalInformation.objects.get(user=user)
+
     if request.method=="POST":
         # Personal Information
         fn=request.POST['firstname']
@@ -74,10 +194,20 @@ def personalinformation(request):
         ht=request.POST['height']
         wt=request.POST['weight']
         bt=request.POST['bloodtype']
-        gsis=request.POST['gsisno']
-        pi=request.POST['pagibigno']
-        sss=request.POST['sssno']
-        tin=request.POST['tinno']
+
+        gsis = request.POST.get('gsisno', "").strip()
+        pi   = request.POST.get('pagibigno', "").strip()
+        sss  = request.POST.get('sssno', "").strip()
+        tin  = request.POST.get('tinno', "").strip()
+
+        if "X" in gsis or not gsis:
+            gsis = employee.gsisno
+        if "X" in pi or not pi:
+            pi = employee.pagibigno
+        if "X" in sss or not sss:
+            sss = employee.sssno
+        if "X" in tin or not tin:
+            tin = employee.tinno
 
         phb=request.POST['permhouseblockno']
         psn=request.POST['permstreetno']
@@ -94,27 +224,14 @@ def personalinformation(request):
         tcm=request.POST['tempcitymunicipality']
         tp=request.POST['tempprovince']
         tzc=request.POST['tempzipcode']
+        
+        tpn = request.POST.get("telephonenumber", "").strip()
+        mbn = request.POST.get("mobilenumber", "").strip()
 
-        emad=request.POST['emailaddress']
-        tpn=request.POST['telephonenumber']
-        mbn=request.POST['mobilephonenumber']
-
-        # Address Details
-        # st=request.POST['street']
-        # brgy=request.POST['barangay']
-        # mun=request.POST['municipality']
-
-        # Contact Details
-        # mobilen=request.POST['mobilenumber']
-        # fm=request.POST['fbm']
-
-        # Work Details
-        # cd=request.POST['collegedepartment']
-        # ar=request.POST['academicrank']
-        # desig=request.POST['designation']
-        # soa=request.POST['statusofappointment']
-        # doa=request.POST['dofappointment']
-        # mf=request.POST['membershipfee']
+        if "X" in tpn or not tpn:
+            tpn = employee.telephonenumber
+        if "X" in mbn or not mbn:
+            mbn = employee.mobilenumber
 
         # Personal Details
         employee.user.first_name = fn
@@ -132,12 +249,13 @@ def personalinformation(request):
         employee.height = int(ht) if ht else None
         employee.weight = int(wt) if wt else None
         employee.bloodtype = bt
+
         employee.gsisno = gsis
         employee.pagibigno = pi
         employee.sssno = sss
         employee.tinno = tin
-        employee.mobilephonenumber = mbn
         employee.telephonenumber = tpn
+        employee.mobilenumber = mbn
 
         employee.permhouseblockno = int(phb) if phb else None
         employee.permstreetno = psn
@@ -188,7 +306,19 @@ def personalinformation(request):
             print(e)
             error = "yes"
 
-    return render(request, "personalinformation.html", locals())
+    masked_gsis = mask_number(employee.gsisno)
+    masked_pi = mask_number(employee.pagibigno)
+    masked_sss = mask_number(employee.sssno)
+    masked_tin = mask_number(employee.tinno)
+    masked_tel = mask_number(employee.telephonenumber)
+    masked_mob = mask_number(employee.mobilenumber)
+
+    return render(request, "personalinformation.html", {
+        "employee": employee,
+        "masked_tel": masked_tel,
+        "masked_mob": masked_mob,
+        "error": error,
+    })
 
 def familybackground(request):
     if not request.user.is_authenticated:
@@ -338,38 +468,42 @@ def workexperience(request):
     work_entry, created = WorkExperience.objects.get_or_create(employee=employee)
 
     if request.method == "POST":
+        form_type = request.POST.get('form_type')
         try:
-            pt = request.POST['positiontitle']
-            coa = request.POST['companyofficeagency']
-            ms = request.POST['monthlysalary']
-            sg = request.POST['salarygrade']
-            aps = request.POST['appointmentstatus']
-            gs = request.POST.get('governmentservice')
-            fd = request.POST['fromdate']
-            td = request.POST['todate']
+            if form_type == "present":
+                pt = request.POST['positiontitle']
+                coa = request.POST['companyofficeagency']
+                ms = request.POST['monthlysalary']
+                sg = request.POST['salarygrade']
+                aps = request.POST['appointmentstatus']
+                fd = request.POST['fromdate']
+                td = request.POST['todate']
 
-            work_entry.positiontitle = pt
-            work_entry.companyofficeagency = coa
-            work_entry.monthlysalary = ms
-            work_entry.salarygrade = sg
-            work_entry.appointmentstatus = aps
-            work_entry.governmentservice = True if gs else False
+                work_entry.positiontitle = pt
+                work_entry.companyofficeagency = coa
+                work_entry.monthlysalary = ms
+                work_entry.salarygrade = sg
+                work_entry.appointmentstatus = aps
 
-            if fd:
-                try:
-                    work_entry.fromdate = datetime.strptime(fd, "%Y-%m-%d").date()
-                except ValueError:
-                    work_entry.fromdate = None
-            else:
-                work_entry.fromdate = None
+                work_entry.fromdate = datetime.strptime(fd, "%Y-%m-%d").date() if fd else None
+                work_entry.todate = datetime.strptime(td, "%Y-%m-%d").date() if td else None
 
-            if td:
-                try:
-                    work_entry.todate = datetime.strptime(td, "%Y-%m-%d").date()
-                except ValueError:
-                    work_entry.todate = None
-            else:
-                work_entry.todate = None
+            elif form_type == "past":
+                ppt = request.POST['pastpositiontitle']
+                pcoa = request.POST['pastcompanyofficeagency']
+                pms = request.POST['pastmonthlysalary']
+                psg = request.POST['pastsalarygrade']
+                paps = request.POST['pastappointmentstatus']
+                pgs = request.POST.get('pastgovernmentservice')
+                pfd = request.POST['pastfromdate']
+                ptd = request.POST['pasttodate']
+
+                work_entry.pastpositiontitle = ppt
+                work_entry.pastcompanyofficeagency = pcoa
+                work_entry.pastmonthlysalary = pms
+                work_entry.pastsalarygrade = psg
+                work_entry.pastappointmentstatus = paps
+                work_entry.pastgovernmentservice = True if pgs else False
 
             work_entry.save()
             error = "no"

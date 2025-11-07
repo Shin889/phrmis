@@ -184,11 +184,61 @@
         </div>
     </div>
     <!-- END panel -->
+    <!-- Employee Modal -->
+    <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="employeeModalLabel">Employees in Office</h5>
+                <div class="ms-auto">
+                <button id="downloadCSV" class="btn btn-sm btn-success me-2">
+                    <i class="fa fa-file-csv"></i> Download CSV
+                </button>
+                <button id="printList" class="btn btn-sm btn-primary">
+                    <i class="fa fa-print"></i> Print
+                </button>
+                </div>
+                <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body bg-gray-900 text-white">
+                <div id="employeeList" class="table-responsive">Loading...</div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Employee Details Modal -->
+    <div class="modal fade" id="employeeDetailsModal" tabindex="-1" aria-labelledby="employeeDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark text-white shadow-lg">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="employeeDetailsLabel">
+                        <i class="fas fa-id-badge me-2"></i>Employee Full Profile
+                    </h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <button id="printProfile" class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                        <button id="downloadCSV" class="btn btn-sm btn-outline-success">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div id="employeeDetails" class="table-responsive">
+                    Loading...
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END #content -->
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -203,110 +253,259 @@ document.addEventListener("DOMContentLoaded", function() {
         {% endfor %}
     ];
 
+    let lastFetchedData = null;
+
+    function showEmployees(office) {
+        fetch(`/get_employees_by_office/?office=${encodeURIComponent(office)}`)
+            .then(response => response.json())
+            .then(data => {
+                lastFetchedData = data; 
+                let listHTML = `<h5 class="mb-3 text-info">${data.office}</h5>`;
+                if (data.employees.length > 0) {
+                    listHTML += `
+                        <table class="table table-dark table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Employee Number</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.employees.map(e => `
+                                    <tr>
+                                        <td>${e.employee_number}</td>
+                                        <td>${e.name}</td>
+                                        <td>${e.position}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>`;
+                } else {
+                    listHTML += `<p>No employees found for this office.</p>`;
+                }
+                document.getElementById("employeeList").innerHTML = listHTML;
+                new bootstrap.Modal(document.getElementById('employeeModal')).show();
+            });
+    }
+
+    // ---------- CSV DOWNLOAD ----------
+    document.getElementById("downloadCSV").addEventListener("click", function() {
+        if (!lastFetchedData || !lastFetchedData.employees) return;
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Employee Number,Name,Position\n";
+        lastFetchedData.employees.forEach(e => {
+            csvContent += `"${e.employee_number}","${e.name}","${e.position}"\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${lastFetchedData.office}_employees.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    // ---------- PRINT LIST ----------
+    document.getElementById("printList").addEventListener("click", function() {
+        if (!lastFetchedData || !lastFetchedData.employees) return;
+        const win = window.open("", "PrintEmployees", "width=800,height=600");
+        win.document.write(`
+            <html>
+                <head>
+                    <title>Employees in ${lastFetchedData.office}</title>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                </head>
+                <body class="p-4">
+                    <h3 class="text-center mb-4">Employees in ${lastFetchedData.office}</h3>
+                    <table class="table table-bordered">
+                        <thead><tr><th>Employee Number</th><th>Name</th><th>Position</th></tr></thead>
+                        <tbody>
+                            ${lastFetchedData.employees.map(e => `
+                                <tr>
+                                    <td>${e.employee_number}</td>
+                                    <td>${e.name}</td>
+                                    <td>${e.position}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </body>
+            </html>
+        `);
+        win.document.close();
+        win.print();
+    });
+
+    // ---------- Charts ----------
     var pieOptions = {
         chart: {
             height: 420,
             type: 'pie',
-            foreColor: '#e5e7eb', 
+            events: {
+                dataPointSelection: function(event, chartContext, config) {
+                    var office = offices[config.dataPointIndex];
+                    showEmployees(office);
+                }
+            },
+            foreColor: '#e5e7eb',
             background: 'transparent'
         },
-        plotOptions: {
-            pie: {
-                size: '95%',
-                expandOnClick: true,
-                offsetY: 10
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            style: { colors: ['#f9fafb'], fontWeight: 500 },
-            dropShadow: { enabled: false }
-        },
-        stroke: { 
-            show: true, 
-            colors: ['#111827'], 
-            width: 2
-        },
-        colors: [
-            '#60A5FA', 
-            '#34D399',
-            '#F59E0B', 
-            '#A78BFA', 
-            '#F87171', 
-            '#FBBF24', 
-            '#22D3EE', 
-            '#EC4899'  
-        ],
+        plotOptions: { pie: { expandOnClick: true } },
         labels: offices,
         series: counts,
-        legend: { 
-            position: 'bottom', 
-            labels: { colors: '#d1d5db' },
-            fontSize: '14px'
-        },
-        title: { 
-            text: 'Employee Distribution by Office', 
-            align: 'center',
-            style: { color: '#f3f4f6', fontWeight: '600', fontSize: '16px' }
-        },
-        tooltip: {
-            theme: 'dark',
-            style: { fontSize: '13px' },
-            y: {
-                formatter: function(val) { return val + " employees"; }
-            }
-        }
+        colors: ['#60A5FA','#34D399','#F59E0B','#A78BFA','#F87171','#FBBF24','#22D3EE','#EC4899']
     };
     new ApexCharts(document.querySelector("#apex-pie-chart"), pieOptions).render();
 
     var columnOptions = {
-        chart: { 
-            type: 'bar', 
-            height: 400, 
-            foreColor: '#e5e7eb', 
-            background: 'transparent' 
-        },
-        plotOptions: { 
-            bar: { 
-                horizontal: false,
-                borderRadius: 6,
-                columnWidth: '55%',
-                distributed: true 
-            } 
-        },
-        colors: [
-            '#60A5FA', '#34D399', '#F59E0B', '#A78BFA',
-            '#F87171', '#FBBF24', '#22D3EE', '#EC4899'
-        ],
-        dataLabels: { 
-            enabled: true, 
-            style: { colors: ['#f9fafb'], fontWeight: 500 } 
+        chart: {
+            type: 'bar',
+            height: 400,
+            events: {
+                dataPointSelection: function(event, chartContext, config) {
+                    var office = offices[config.dataPointIndex];
+                    showEmployees(office);
+                }
+            },
+            foreColor: '#e5e7eb',
+            background: 'transparent'
         },
         series: [{ name: 'Employees', data: counts }],
-        xaxis: { 
-            categories: offices, 
-            title: { style: { color: '#9ca3af' } },
-            labels: { style: { colors: '#cbd5e1' } }
-        },
-        yaxis: {
-            title: { text: 'Employee Count', style: { color: '#9ca3af' } },
-            labels: { style: { colors: '#cbd5e1' } }
-        },
-        title: { 
-            text: 'Employee Count per Office', 
-            align: 'center',
-            style: { color: '#f3f4f6', fontWeight: '600', fontSize: '16px' }
-        },
-        grid: { borderColor: '#374151' },
-        tooltip: {
-            theme: 'dark',
-            y: { formatter: function(val) { return val + " employees"; } }
-        }
+        xaxis: { categories: offices },
+        colors: ['#60A5FA','#34D399','#F59E0B','#A78BFA','#F87171','#FBBF24','#22D3EE','#EC4899']
     };
     new ApexCharts(document.querySelector("#apex-column-chart"), columnOptions).render();
+
+    // ---------- Table Office Click ----------
+    document.querySelectorAll("table tbody tr td:nth-child(4)").forEach(cell => {
+        cell.style.cursor = "pointer";
+        cell.classList.add("text-info");
+        cell.addEventListener("click", () => {
+            showEmployees(cell.innerText.trim());
+        });
+    });
+
+    // ---------- Employee Number Click ----------
+    document.querySelectorAll("table tbody tr td:first-child").forEach(cell => {
+        cell.style.cursor = "pointer";
+        cell.classList.add("text-primary", "fw-bold");
+
+        cell.addEventListener("click", () => {
+            const empNo = cell.innerText.trim();
+
+            fetch(`/get_employee_details/?employee_number=${encodeURIComponent(empNo)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let html = `
+                        <div class="text-light">
+                            <h4 class="text-info mb-3">
+                                <i class="fas fa-user-circle me-2"></i>${data.personal.name}
+                            </h4>
+                            <p><i class="fas fa-id-card me-2"></i><strong>Employee Number:</strong> ${empNo}</p>
+                            <p><i class="fas fa-envelope me-2"></i><strong>Email:</strong> ${data.personal.email}</p>
+                            <p><i class="fas fa-venus-mars me-2"></i><strong>Sex:</strong> ${data.personal.sex}</p>
+                            <p><i class="fas fa-heart me-2"></i><strong>Status:</strong> ${data.personal.civilstatus}</p>
+                            <p><i class="fas fa-birthday-cake me-2"></i><strong>Date of Birth:</strong> ${data.personal.dob}</p>
+                            <p><i class="fas fa-flag me-2"></i><strong>Citizenship:</strong> ${data.personal.citizenship}</p>
+
+                            <hr class="border-secondary">
+                            <h5><i class="fas fa-graduation-cap me-2"></i>Education</h5>
+                            <p>${data.education.degree || 'N/A'} at ${data.education.school || 'N/A'}</p>
+
+                            <hr class="border-secondary">
+                            <h5><i class="fas fa-users me-2"></i>Family</h5>
+                            <p><strong>Spouse:</strong> ${data.family.spouse || 'N/A'}</p>
+                            <p><strong>Children:</strong> ${data.family.children || 'N/A'}</p>
+
+                            <hr class="border-secondary">
+                            <h5><i class="fas fa-briefcase me-2"></i>Work Experience</h5>
+                            ${data.work.length ? `
+                                <table class="table table-sm table-striped table-dark align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th><i class="fas fa-briefcase me-1"></i>Position</th>
+                                            <th><i class="fas fa-building me-1"></i>Office</th>
+                                            <th><i class="fas fa-calendar-alt me-1"></i>From</th>
+                                            <th><i class="fas fa-calendar-check me-1"></i>To</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${data.work.map(w => `
+                                            <tr>
+                                                <td>${w.position}</td>
+                                                <td>${w.office}</td>
+                                                <td>${w.from}</td>
+                                                <td>${w.to}</td>
+                                            </tr>
+                                        `).join("")}
+                                    </tbody>
+                                </table>
+                            ` : '<p>No work history available.</p>'}
+
+                            <hr class="border-secondary">
+                            <h5><i class="fas fa-chalkboard-teacher me-2"></i>Learning & Development</h5>
+                            <p>${data.learning.title || 'N/A'} (${data.learning.hours || '0'} hrs)</p>
+
+                            <hr class="border-secondary">
+                            <h5><i class="fas fa-award me-2"></i>Other Information</h5>
+                            <p><strong><i class="fas fa-lightbulb me-2"></i>Skills:</strong> ${data.other.skills || 'N/A'}</p>
+                            <p><strong><i class="fas fa-trophy me-2"></i>Recognitions:</strong> ${data.other.recognitions || 'N/A'}</p>
+                        </div>
+                    `;
+
+                    document.getElementById("employeeDetails").innerHTML = html;
+                    new bootstrap.Modal(document.getElementById('employeeDetailsModal')).show();
+                });
+        });
+    });
+
+    // ---------- PRINT & CSV BUTTONS ----------
+    document.getElementById("printProfile").addEventListener("click", () => {
+        const content = document.getElementById("employeeDetails").innerHTML;
+        const popup = window.open("", "", "width=1000,height=700");
+        popup.document.write(`
+            <html>
+            <head>
+                <title>Employee Profile</title>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+            </head>
+            <body class="bg-dark text-white p-4">
+                <h3 class="mb-4"><i class="fas fa-id-badge me-2"></i>Employee Full Profile</h3>
+                ${content}
+            </body>
+            </html>
+        `);
+        popup.document.close();
+        popup.focus();
+        popup.print();
+    });
+
+    document.getElementById("downloadCSV").addEventListener("click", () => {
+        const table = document.querySelector("#employeeDetails table");
+        if (!table) {
+            alert("No table data available.");
+            return;
+        }
+
+        let csv = [];
+        const rows = table.querySelectorAll("tr");
+        for (let row of rows) {
+            const cols = row.querySelectorAll("th, td");
+            let rowData = [];
+            cols.forEach(col => rowData.push('"' + col.innerText.replace(/"/g, '""') + '"'));
+            csv.push(rowData.join(","));
+        }
+
+        const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "employee_profile.csv";
+        link.click();
+    });
 });
 </script>
-
 {% endblock %}
 
 {% endblock %}

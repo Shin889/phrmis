@@ -182,7 +182,7 @@ HRMIS | Personal Information
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                                     <input type="text" class="form-control" id="gsis" name="gsisno" placeholder="GSIS No."
-                                        value="{{employee.gsisno}}" />
+                                        value="{{ masked_gsis}}" />
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@ HRMIS | Personal Information
                                 <label for="pi" class="form-label">PAGIBIG NO.</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{employee.pagibigno}}" />
+                                    <input type="text" class="form-control" id="pi" name="pagibigno" placeholder="PAGIBIG No." value="{{ masked_pi}}" />
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@ HRMIS | Personal Information
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
                                     <input type="text" class="form-control" id="sss" name="sssno" placeholder="SSS No."
-                                        value="{{employee.sssno}}" />
+                                        value="{{ masked_sss}}" />
                                 </div>
                             </div>
                         </div>
@@ -211,13 +211,13 @@ HRMIS | Personal Information
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calculator"></i></span>
                                     <input type="text" class="form-control" id="tin" name="tinno" placeholder="TIN No."
-                                        value="{{employee.tinno}}" />
+                                        value="{{ masked_tin}}" />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-        <hr>
+                <hr>
                 <div class="row">
                     <div class="col-md-6">
                         <h5><i class="fas fa-home me-2"></i>Permanent Address</h5>
@@ -362,22 +362,25 @@ HRMIS | Personal Information
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 <input class="form-control" type="tel" id="tpn" name="telephonenumber"
-                                    placeholder="Telephone Number (e.g., 02-XXXX-XXXX)" value="{{employee.telephonenumber}}" />
+                                    placeholder="Telephone Number (e.g., 02-XXXX-XXXX)"
+                                    value="{{ masked_tel }}" />
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Mobile Number</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
-                                <input class="form-control" type="tel" id="mbn" name="mobilephonenumber"
-                                    placeholder="Mobile Number (e.g., 09XX-XXX-XXXX)" value="{{employee.mobilephonenumber}}" />
+                                <input class="form-control" type="tel" id="mbn" name="mobilenumber"
+                                    placeholder="Mobile Number (e.g., 09XX-XXX-XXXX)"
+                                    value="{{ masked_mob }}" />
                             </div>
                         </div>
                     </div>
                 </div>
-        
+                            
                 <div class="mb-3">
                     <label class="form-label">Profile Picture</label>
                     <div class="input-group">
@@ -400,10 +403,32 @@ HRMIS | Personal Information
     alert('Personal Information Updated Successfully');
     window.location = ("personalinformation");
 </script>
-{% endif %}
-{% if error == "yes" %}
+{% elif error == "yes" %}
 <script>
     alert('Something went wrong, try again.');
 </script>
 {% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const fields = ["tpn", "mbn"];
+    fields.forEach(id => {
+        const input = document.getElementById(id);
+        const original = input.value;
+
+        input.addEventListener("focus", () => {
+            if (original.includes("X")) {
+                input.value = "";
+            }
+        });
+
+        input.addEventListener("blur", () => {
+            if (input.value.trim() === "") {
+                input.value = original;
+            }
+        });
+    });
+});
+</script>
+
 {% endblock %}

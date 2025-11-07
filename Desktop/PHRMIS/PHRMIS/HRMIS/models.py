@@ -137,6 +137,15 @@ class WorkExperience(models.Model):
     governmentservice = models.BooleanField(default=False)
     fromdate = models.DateField(null=True, blank=True)
     todate = models.DateField(null=True, blank=True)
+    
+    pastpositiontitle = models.CharField(max_length=30)
+    pastcompanyofficeagency = models.CharField(max_length=50)
+    pastmonthlysalary = models.CharField(max_length=10)
+    pastsalarygrade = models.CharField(max_length=10)
+    pastappointmentstatus = models.CharField(max_length=20)
+    pastgovernmentservice = models.BooleanField(default=False)
+    pastfromdate = models.DateField(null=True, blank=True)
+    pasttodate = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.employee.employeenumber} - {self.positiontitle}"
