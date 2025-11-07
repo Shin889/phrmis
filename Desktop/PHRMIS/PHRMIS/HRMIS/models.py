@@ -47,6 +47,40 @@ Sex_Choices=(
     ('FEMALE', 'Female'),
 )
 
+# Office_Choices=(
+#     ('PEPO', ''),
+#     ('PESO', ''),
+#     ('PYDO', 'Provincial Youth Development Office'),
+#     ('CC', 'Command Center'),
+#     ('GO', 'Governor's Office),
+#     ('PHRMDO', 'Provincial Human Resource Management Development Office'),
+#     ('PNO', 'Provincial Nutrition Office'),
+#     ('PAO', 'Provincial Administrator's Office'), //revise
+#     ('PAO', 'Provincial Assessor Office'), 
+#     ('PAO', 'Provincial Agriculturist Office'),
+#     ('PLO', 'Provincial Legal Office'),
+#     ('PPDO', 'Provincial Planning and Development Office), 
+#     ('PTO', 'Provincial Treasurer's Office'),
+#     ('VGO', 'Vice Governor's Office'),
+#     ('SP', 'Sangguniang Panlalawigan'),
+#     ('PSWDO', 'Provincial Social Welfare and Development Office'),
+#     ('PIASO', 'Provincial Internal Audit Services Office'),
+#     ('PVO', 'Provincial Veterinary Office'),
+#     ('PEPO', 'Provincial Equipment Pool Office'),
+#     ('PGSO', 'Provincial General Services Office'),
+#     ('PPDAO', 'Provincial Persons with Disability Affairs Office),
+#     ('CDO', 'Congressional District Office'),
+#     ('DOH', 'Department of Health'),
+#     ('HRH', 'Human Resources for Health'),
+#     ('DENR', 'Department of Environment and Natural Resources Office'),
+#     ('PEO', 'Provincial Engineer's Office'),
+# )
+
+# Appointment_Status_Choices=(
+#     ('Job Order', ''),
+#     ('Regular', ''),
+# )
+
 class PersonalInformation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nameextension = NameField(max_length=50, choices=Name_Extension_Choices)
